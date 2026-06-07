@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head><title>NMH Icon Generator</title></head>
+<body>
+<canvas id="c192" width="192" height="192" style="display:none"></canvas>
+<canvas id="c512" width="512" height="512" style="display:none"></canvas>
+<script>
+function drawIcon(canvas, size) {
+  const ctx = canvas.getContext('2d');
+  const r = size * 0.08;
+  // Background
+  ctx.fillStyle = '#1B7A3E';
+  ctx.beginPath();
+  ctx.roundRect(0, 0, size, size, r);
+  ctx.fill();
+  // Draw N
+  const pad = size * 0.18;
+  const w = size - pad * 2;
+  const h = size - pad * 2;
+  const bar = w * 0.22;
+  ctx.fillStyle = '#FFFFFF';
+  // Left bar
+  ctx.fillRect(pad, pad, bar, h);
+  // Right bar
+  ctx.fillRect(pad + w - bar, pad, bar, h);
+  // Diagonal
+  ctx.beginPath();
+  ctx.moveTo(pad + bar, pad);
+  ctx.lineTo(pad + bar * 1.85, pad);
+  ctx.lineTo(pad + w - bar + (bar * 0.85), pad + h);
+  ctx.lineTo(pad + w - bar, pad + h);
+  ctx.closePath();
+  ctx.fill();
+  return canvas.toDataURL('image/png');
+}
+const c192 = document.getElementById('c192');
+const c512 = document.getElementById('c512');
+const d192 = drawIcon(c192, 192);
+const d512 = drawIcon(c512, 512);
+// Show download links
+document.body.innerHTML += `
+  <h2 style="font-family:sans-serif">NMH PWA Icons — Download Both</h2>
+  <p style="font-family:sans-serif;color:#666">Download both files and upload them to your GitHub repo alongside index.html</p>
+  <br>
+  <a download="icon-192.png" href="${d192}" style="display:inline-block;margin:10px;padding:12px 24px;background:#1B7A3E;color:white;text-decoration:none;font-family:sans-serif;border-radius:4px;">⬇ Download icon-192.png</a>
+  <a download="icon-512.png" href="${d512}" style="display:inline-block;margin:10px;padding:12px 24px;background:#1B7A3E;color:white;text-decoration:none;font-family:sans-serif;border-radius:4px;">⬇ Download icon-512.png</a>
+  <br><br>
+  <img src="${d192}" width="96" height="96" style="border-radius:12px;margin:10px">
+  <img src="${d512}" width="96" height="96" style="border-radius:12px;margin:10px">
+`;
+</script>
+</body>
+</html>
