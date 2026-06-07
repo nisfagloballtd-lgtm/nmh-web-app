@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="NISFA Media House — Nigeria's dedicated agribusiness, trade and market intelligence media platform.">
+<meta name="theme-color" content="#8C1515">
+<title>NMH — NISFA Media House</title>
+
+<!-- ── FONTS ── -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- ── FIREBASE SDK (v10 compat CDN) ── -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<style>
+/* ═══════════════════════════════════════════════════
+   DESIGN TOKENS
+═══════════════════════════════════════════════════ */
+:root {
+  --red:       #8C1515;
+  --red-deep:  #5E0E0E;
+  --red-glow:  rgba(140,21,21,0.35);
+  --gold:      #C9A84C;
+  --gold-dim:  rgba(201,168,76,0.15);
+  --gold-pale: #E8D5A3;
+  --ink:       #0B0B0B;
+  --ink-2:     #141414;
+  --ink-3:     #1C1C1C;
+  --ink-4:     #252525;
+  --ink-5:     #2E2E2E;
+  --ash:       #3E3E3E;
+  --silver:    #888;
+  --mist:      #C8C4BC;
+  --cream:     #F0EBE2;
+  --white:     #FFFFFF;
+  --green:     #2ECC71;
+  --green-dim: rgba(46,204,113,0.15);
+  --r: 4px;
+  --nav-h: 60px;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background:var(--ink); color:var(--mist);
+  font-family:'Barlow',sans-serif; font-weight:300;
+  line-height:1.6; overflow-x:hidden;
+}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--ink-2)}
+::-webkit-scrollbar-thumb{background:var(--red);border-radius:3px}
+
+/* ── TICKER ── */
+.ticker-bar{background:var(--red-deep);border-bottom:1px solid rgba(255,255,255,0.06);height:32px;overflow:hidden;display:flex;align-items:center;}
+.ticker-label{background:var(--red);height:100%;padding:0 14px;display:flex;align-items:center;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--white);white-space:nowrap;flex-shrink:0;}
+.ticker-track{overflow:hidden;flex:1;}
+.ticker-inner{display:inline-flex;animation:tickerScroll 45s linear infinite;white-space:nowrap;}
+.ticker-inner span{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:1.5px;padding:0 24px;color:rgba(255,255,255,0.7);}
+.ticker-inner span.up{color:var(--green);}
+.ticker-inner span.dn{color:#ef5350;}
+.ticker-inner span.sep{color:var(--ash);padding:0 4px;}
+@keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:100;height:var(--nav-h);background:rgba(11,11,11,0.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--ink-4);display:flex;align-items:center;justify-content:space-between;padding:0 28px;gap:16px;}
+.nav-logo{display:flex;align-items:center;gap:11px;text-decoration:none;flex-shrink:0;cursor:pointer;}
+.nav-badge{width:34px;height:34px;background:var(--red);border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.nav-logo-text .t1{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:14px;letter-spacing:4px;color:var(--white);line-height:1;}
+.nav-logo-text .t2{font-size:8px;letter-spacing:2px;color:var(--silver);text-transform:uppercase;}
+.nav-links{display:flex;align-items:center;gap:2px;list-style:none;}
+.nav-links button{background:none;border:none;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--silver);padding:6px 13px;border-radius:var(--r);transition:color .2s,background .2s;}
+.nav-links button:hover,.nav-links button.active{color:var(--white);background:var(--ink-3);}
+.nav-links button.live-btn{color:var(--white);background:var(--red);display:flex;align-items:center;gap:5px;}
+.nav-links button.live-btn:hover{background:var(--red-deep);}
+.live-dot{width:7px;height:7px;background:var(--white);border-radius:50%;animation:livePulse 1.4s ease-in-out infinite;}
+@keyframes livePulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+.nav-right{display:flex;align-items:center;gap:8px;}
+.nav-search{background:var(--ink-3);border:1px solid var(--ink-5);border-radius:var(--r);padding:6px 12px;font-family:'Barlow',sans-serif;font-size:12px;color:var(--mist);width:160px;outline:none;transition:border-color .2s;}
+.nav-search:focus{border-color:var(--red);}
+.btn-admin-nav{background:var(--gold-dim);border:1px solid rgba(201,168,76,0.3);color:var(--gold);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:6px 14px;border-radius:var(--r);cursor:pointer;transition:background .2s;}
+.btn-admin-nav:hover{background:rgba(201,168,76,0.25);}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;}
+.hamburger span{display:block;width:22px;height:2px;background:var(--mist);border-radius:2px;}
+
+/* ── SECTIONS ── */
+.page-section{display:none;}
+.page-section.active{display:block;}
+
+/* ── HERO ── */
+.hero{position:relative;min-height:460px;display:flex;align-items:flex-end;overflow:hidden;background:var(--ink-2);}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 80% at 60% 50%,rgba(140,21,21,0.18),transparent 70%),linear-gradient(180deg,transparent 40%,rgba(11,11,11,0.96) 100%);z-index:1;}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:48px 48px;}
+.hero-content{position:relative;z-index:2;padding:56px 44px 44px;max-width:720px;}
+.hero-eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.hero-eyebrow::before{content:'';display:block;width:24px;height:1px;background:var(--gold);}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.1;color:var(--white);margin-bottom:14px;}
+.hero h1 em{font-style:italic;color:var(--gold);}
+.hero-sub{font-size:14px;color:var(--silver);max-width:480px;margin-bottom:28px;line-height:1.75;}
+.hero-ctas{display:flex;gap:10px;flex-wrap:wrap;}
+.hero-stats{position:absolute;right:0;top:0;bottom:0;width:240px;z-index:2;background:rgba(18,18,18,0.75);backdrop-filter:blur(10px);border-left:1px solid var(--ink-4);padding:28px 20px;display:flex;flex-direction:column;gap:16px;overflow-y:auto;}
+.stat-item{border-bottom:1px solid var(--ink-4);padding-bottom:14px;}
+.stat-item:last-child{border-bottom:none;padding-bottom:0;}
+.stat-label{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--silver);margin-bottom:3px;}
+.stat-commodity{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--white);margin-bottom:2px;}
+.stat-change{font-size:11px;font-weight:600;}
+.stat-change.up{color:var(--green);}
+.stat-change.dn{color:#ef5350;}
+
+/* ── BUTTONS ── */
+.btn-primary{background:var(--red);color:var(--white);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:12px 26px;border-radius:var(--r);border:none;cursor:pointer;transition:background .2s,transform .15s;}
+.btn-primary:hover{background:#a01a1a;transform:translateY(-1px);}
+.btn-ghost{background:transparent;color:var(--mist);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:11px 22px;border-radius:var(--r);border:1px solid var(--ink-5);cursor:pointer;transition:border-color .2s,color .2s;}
+.btn-ghost:hover{border-color:var(--ash);color:var(--white);}
+
+/* ── WRAP / SECTION HEADERS ── */
+.wrap{max-width:1120px;margin:0 auto;padding:0 28px;}
+.sec-head{display:flex;align-items:center;justify-content:space-between;padding:48px 0 24px;gap:16px;flex-wrap:wrap;}
+.sec-head-left{display:flex;flex-direction:column;gap:3px;}
+.sec-eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--red);display:flex;align-items:center;gap:8px;}
+.sec-eyebrow::before{content:'';width:18px;height:1px;background:var(--red);}
+.sec-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--white);}
+.sec-action{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);background:var(--gold-dim);border:1px solid rgba(201,168,76,0.3);padding:8px 16px;border-radius:var(--r);cursor:pointer;transition:background .2s;}
+.sec-action:hover{background:rgba(201,168,76,0.25);}
+
+/* ── PRICE BOARD ── */
+.price-date-bar{background:var(--ink-3);border:1px solid var(--ink-4);border-radius:var(--r);padding:11px 18px;display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:8px;}
+.pdb-left{display:flex;align-items:center;gap:8px;}
+.pdb-dot{width:7px;height:7px;background:var(--green);border-radius:50%;animation:livePulse 1.4s infinite;}
+.pdb-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--green);}
+.pdb-date{font-size:12px;color:var(--silver);}
+.pdb-src{font-size:11px;color:var(--silver);}
+.price-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:11px;margin-bottom:36px;}
+.price-card{background:var(--ink-3);border:1px solid var(--ink-4);border-radius:var(--r);padding:16px 18px;position:relative;overflow:hidden;transition:border-color .2s,transform .2s;cursor:default;}
+.price-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.price-card.up::before{background:var(--green);}
+.price-card.down::before{background:#ef5350;}
+.price-card.flat::before{background:var(--silver);}
+.price-card:hover{border-color:var(--ash);transform:translateY(-2px);}
+.pc-commodity{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--silver);margin-bottom:5px;}
+.pc-price{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;color:var(--white);line-height:1;margin-bottom:3px;}
+.pc-unit{font-size:10px;color:var(--silver);margin-bottom:7px;}
+.pc-change{display:inline-flex;align-items:center;gap:3px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;padding:2px 7px;border-radius:2px;}
+.pc-change.up{color:var(--green);background:var(--green-dim);}
+.pc-change.down{color:#ef5350;background:rgba(239,83,80,0.12);}
+.pc-change.flat{color:var(--silver);background:rgba(136,136,136,0.1);}
+.pc-bg{position:absolute;right:-2px;bottom:-6px;font-family:'Barlow Condensed',sans-serif;font-size:50px;font-weight:900;color:rgba(255,255,255,0.03);pointer-events:none;line-height:1;}
+
+/* ── FORM PANEL ── */
+.form-panel{background:var(--ink-3);border:1px solid var(--ink-4);border-left:3px solid var(--gold);border-radius:var(--r);padding:24px 28px;margin-bottom:28px;}
+.panel-title{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:18px;}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-bottom:14px;}
+.form-group{display:flex;flex-direction:column;gap:4px;}
+.form-label{font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--silver);}
+.form-input,.form-select,.form-textarea{background:var(--ink-4);border:1px solid var(--ink-5);border-radius:var(--r);padding:8px 11px;font-family:'Barlow',sans-serif;font-size:13px;color:var(--white);outline:none;transition:border-color .2s;-webkit-appearance:none;}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--gold);}
+.form-select option{background:var(--ink-3);}
+.form-textarea{resize:vertical;}
+.form-actions{display:flex;gap:9px;flex-wrap:wrap;}
+.btn-post{background:var(--red);color:var(--white);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:9px 22px;border-radius:var(--r);border:none;cursor:pointer;transition:background .2s;}
+.btn-post:hover{background:#a01a1a;}
+.btn-cancel-sm{background:transparent;color:var(--silver);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:9px 18px;border-radius:var(--r);border:1px solid var(--ink-5);cursor:pointer;}
+
+/* ── LIVE PLAYER ── */
+.live-layout{display:grid;grid-template-columns:1fr 300px;gap:18px;margin-bottom:44px;}
+.live-player{background:var(--ink-2);border:1px solid var(--ink-4);border-radius:var(--r);overflow:hidden;}
+.player-screen{position:relative;background:#000;width:100%;aspect-ratio:16/9;}
+.player-screen iframe{width:100%;height:100%;border:none;display:block;}
+.player-screen .player-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;background:#080808;}
+.play-btn-circle{width:68px;height:68px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .2s,background .2s;box-shadow:0 0 36px var(--red-glow);}
+.play-btn-circle:hover{transform:scale(1.08);background:#a01a1a;}
+.live-badge{position:absolute;top:12px;left:12px;background:var(--red);color:var(--white);font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;padding:3px 9px;border-radius:2px;display:flex;align-items:center;gap:4px;}
+.player-meta{padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.pm-show{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;color:var(--white);}
+.pm-sub{font-size:11px;color:var(--silver);margin-top:2px;}
+.pm-viewers{font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--silver);}
+.upcoming-panel{background:var(--ink-3);border:1px solid var(--ink-4);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;max-height:460px;}
+.up-header{padding:14px 18px;border-bottom:1px solid var(--ink-4);font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--silver);}
+.up-list{overflow-y:auto;flex:1;}
+.up-item{display:flex;gap:12px;align-items:flex-start;padding:12px 18px;border-bottom:1px solid var(--ink-4);cursor:pointer;transition:background .15s;}
+.up-item:hover{background:var(--ink-4);}
+.up-item:last-child{border-bottom:none;}
+.up-time{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:var(--gold);white-space:nowrap;margin-top:2px;min-width:36px;}
+.up-dot{width:5px;height:5px;border-radius:50%;margin-top:6px;flex-shrink:0;}
+.up-title{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--white);line-height:1.2;}
+.up-day{font-size:10px;color:var(--silver);margin-top:2px;}
+
+/* ── STREAM CONFIG ── */
+.stream-cta{background:var(--ink-3);border:1px solid var(--ink-4);border-left:3px solid var(--red);border-radius:var(--r);padding:20px 24px;margin-bottom:44px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;}
+.sc-title{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;color:var(--white);margin-bottom:3px;}
+.sc-sub{font-size:12px;color:var(--silver);}
+
+/* ── PROGRAMMES GRID ── */
+.progs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:14px;margin-bottom:44px;}
+.prog-card{background:var(--ink-3);border:1px solid var(--ink-4);border-radius:var(--r);overflow:hidden;transition:transform .2s,box-shadow .2s,border-color .2s;cursor:pointer;}
+.prog-card:hover{transform:translateY(-3px);box-shadow:0 10px 36px rgba(0,0,0,0.5);border-color:var(--ash);}
+.pc-thumb{aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.pc-thumb::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(11,11,11,0.8) 100%);}
+.pc-play{position:absolute;width:42px;height:42px;background:rgba(140,21,21,0.85);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:1;opacity:0;transition:opacity .2s;}
+.prog-card:hover .pc-play{opacity:1;}
+.pc-day-badge{position:absolute;top:9px;right:9px;z-index:2;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:2px 7px;border-radius:2px;}
+.pc-body{padding:14px 16px;}
+.pc-meta{display:flex;align-items:center;gap:7px;margin-bottom:5px;}
+.pc-freq{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--silver);}
+.pc-title{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:var(--white);line-height:1.3;margin-bottom:6px;}
+.pc-desc{font-size:11px;color:var(--silver);line-height:1.5;}
+.pc-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:10px;}
+.pc-tag{background:rgba(255,255,255,0.04);border:1px solid var(--ink-5);border-radius:2px;padding:2px 7px;font-size:9px;color:var(--mist);}
+
+/* ── ABOUT ── */
+.about-hero{background:linear-gradient(135deg,var(--red-deep),var(--ink-2));border:1px solid rgba(140,21,21,0.3);border-radius:var(--r);padding:44px;margin-bottom:24px;position:relative;overflow:hidden;}
+.about-hero::before{content:'NMH';position:absolute;right:-12px;top:50%;transform:translateY(-50%);font-family:'Barlow Condensed',sans-serif;font-size:160px;font-weight:900;color:rgba(255,255,255,0.03);pointer-events:none;letter-spacing:-5px;}
+.ah-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+.ah-title{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--white);margin-bottom:12px;line-height:1.3;}
+.ah-body{font-size:13px;color:var(--mist);max-width:640px;line-height:1.8;}
+.pillars-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:11px;margin-bottom:44px;}
+.pillar{background:var(--ink-3);border:1px solid var(--ink-4);border-radius:var(--r);padding:22px 18px;transition:border-color .2s,transform .2s;}
+.pillar:hover{border-color:var(--red);transform:translateY(-2px);}
+.p-num{font-family:'Barlow Condensed',sans-serif;font-size:34px;font-weight:900;color:var(--red);line-height:1;margin-bottom:7px;}
+.p-name{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--white);}
+.p-desc{font-size:11px;color:var(--silver);margin-top:5px;line-height:1.5;}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;margin-bottom:52px;}
+.team-card{background:var(--ink-3);border:1px solid var(--ink-4);border-radius:var(--r);padding:26px 18px 18px;text-align:center;}
+.tc-avatar{width:58px;height:58px;border-radius:50%;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:var(--white);}
+.tc-name{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--white);}
+.tc-role{font-size:10px;color:var(--silver);margin-top:3px;line-height:1.4;}
+
+/* ── AUTH / LOGIN ── */
+.auth-overlay{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,0.88);display:none;align-items:center;justify-content:center;padding:20px;}
+.auth-overlay.open{display:flex;}
+.auth-box{background:var(--ink-2);border:1px solid var(--ink-4);border-radius:var(--r);width:100%;max-width:400px;padding:36px;position:relative;}
+.auth-close{position:absolute;top:14px;right:14px;background:none;border:none;cursor:pointer;color:var(--silver);font-size:18px;}
+.auth-close:hover{color:var(--white);}
+.auth-logo{display:flex;align-items:center;gap:10px;margin-bottom:24px;}
+.auth-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--white);margin-bottom:4px;}
+.auth-sub{font-size:12px;color:var(--silver);margin-bottom:22px;}
+.auth-error{background:rgba(239,83,80,0.12);border:1px solid rgba(239,83,80,0.3);border-radius:var(--r);padding:10px 14px;font-size:12px;color:#ef9a9a;margin-bottom:14px;display:none;}
+.auth-error.show{display:block;}
+.auth-form{display:flex;flex-direction:column;gap:14px;}
+.auth-actions{display:flex;gap:8px;margin-top:4px;flex-wrap:wrap;}
+.btn-signin{background:var(--red);color:var(--white);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:11px 24px;border-radius:var(--r);border:none;cursor:pointer;width:100%;transition:background .2s;}
+.btn-signin:hover{background:#a01a1a;}
+.auth-switch{font-size:12px;color:var(--silver);text-align:center;margin-top:12px;}
+.auth-switch span{color:var(--gold);cursor:pointer;text-decoration:underline;}
+.auth-user-bar{display:none;align-items:center;gap:8px;}
+.auth-user-bar.show{display:flex;}
+.user-avatar{width:28px;height:28px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:var(--white);}
+.user-email{font-size:11px;color:var(--silver);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.btn-signout{background:none;border:1px solid var(--ink-5);color:var(--silver);font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 10px;border-radius:var(--r);cursor:pointer;transition:border-color .2s;}
+.btn-signout:hover{border-color:var(--ash);color:var(--white);}
+
+/* ── ADMIN PANEL ── */
+.admin-layout{display:grid;grid-template-columns:190px 1fr;min-height:calc(100vh - var(--nav-h) - 32px);}
+.admin-sidebar{background:var(--ink-2);border-right:1px solid var(--ink-4);padding:20px 0;}
+.admin-sidebar-title{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--silver);padding:0 18px 10px;}
+.admin-nav-item{display:flex;align-items:center;gap:9px;padding:10px 18px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;letter-spacing:1px;color:var(--silver);cursor:pointer;transition:background .15s,color .15s;border-left:2px solid transparent;}
+.admin-nav-item:hover{background:var(--ink-3);color:var(--white);}
+.admin-nav-item.active{background:var(--ink-3);color:var(--white);border-left-color:var(--red);}
+.admin-body{padding:28px;}
+.admin-panel{display:none;}
+.admin-panel.active{display:block;}
+.admin-panel-title{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--white);margin-bottom:22px;}
+
+/* stats row */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-bottom:28px;}
+.stat-box{background:var(--ink-3);border:1px solid var(--ink-4);border-radius:var(--r);padding:16px 18px;}
+.sb-label{font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--silver);margin-bottom:5px;}
+.sb-val{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:800;color:var(--white);}
+.sb-sub{font-size:10px;color:var(--silver);margin-top:2px;}
+
+/* table */
+.data-table{width:100%;border-collapse:collapse;font-size:12px;}
+.data-table thead tr{background:var(--ink-4);border-bottom:1px solid var(--ink-5);}
+.data-table thead th{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--silver);padding:10px 13px;text-align:left;}
+.data-table tbody tr{border-bottom:1px solid var(--ink-4);transition:background .15s;}
+.data-table tbody tr:hover{background:var(--ink-3);}
+.data-table tbody td{padding:10px 13px;color:var(--mist);}
+.badge-sm{display:inline-block;padding:2px 7px;border-radius:2px;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:1px;}
+.badge-live{background:var(--green-dim);color:var(--green);}
+.badge-sched{background:var(--gold-dim);color:var(--gold);}
+
+/* admin locked state */
+.admin-locked{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;gap:16px;text-align:center;}
+.lock-icon{font-size:48px;opacity:.4;}
+.lock-title{font-family:'Playfair Display',serif;font-size:22px;color:var(--white);}
+.lock-sub{font-size:13px;color:var(--silver);max-width:320px;}
+
+/* ── FOOTER ── */
+footer{background:var(--ink-2);border-top:1px solid var(--ink-4);margin-top:72px;}
+.footer-top{max-width:1120px;margin:0 auto;padding:48px 28px 36px;display:grid;grid-template-columns:220px 1fr 1fr 1fr;gap:36px;}
+.fb-name{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;letter-spacing:4px;color:var(--white);margin-bottom:3px;}
+.fb-sub{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--silver);margin-bottom:14px;}
+.ft-brand p{font-size:12px;color:var(--silver);line-height:1.7;}
+.ft-col-title{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+.ft-col ul{list-style:none;display:flex;flex-direction:column;gap:7px;}
+.ft-col ul li a{text-decoration:none;font-size:12px;color:var(--silver);transition:color .15s;cursor:pointer;}
+.ft-col ul li a:hover{color:var(--white);}
+.footer-bottom{border-top:1px solid var(--ink-4);max-width:1120px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.fb-copy{font-size:10px;color:var(--silver);}
+.fb-tag{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:3px;color:var(--red-deep);}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:22px;right:22px;z-index:600;background:var(--ink-3);border:1px solid var(--ink-5);border-left:3px solid var(--green);border-radius:var(--r);padding:13px 18px;font-size:12px;color:var(--white);max-width:300px;transform:translateY(70px);opacity:0;transition:transform .3s,opacity .3s;pointer-events:none;}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.err{border-left-color:#ef5350;}
+
+/* ── LOADING ── */
+.spinner{width:24px;height:24px;border:2px solid var(--ink-5);border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-row{padding:32px;text-align:center;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .hero-stats{display:none;}
+  .hero-content{padding:36px 20px 32px;}
+  .live-layout{grid-template-columns:1fr;}
+  .footer-top{grid-template-columns:1fr 1fr;}
+  .admin-layout{grid-template-columns:1fr;}
+  .admin-sidebar{display:none;}
+}
+@media(max-width:600px){
+  nav{padding:0 14px;}
+  .nav-links,.nav-search{display:none;}
+  .hamburger{display:flex;}
+  .wrap{padding:0 14px;}
+  .footer-top{grid-template-columns:1fr;}
+  .about-hero{padding:26px 18px;}
+}
+.mobile-nav{position:fixed;top:0;left:0;bottom:0;width:250px;background:var(--ink-2);border-right:1px solid var(--ink-4);z-index:200;transform:translateX(-100%);transition:transform .3s;padding:72px 16px 28px;display:flex;flex-direction:column;gap:3px;}
+.mobile-nav.open{transform:translateX(0);}
+.mobile-nav button{background:none;border:none;cursor:pointer;text-align:left;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--silver);padding:11px 14px;border-radius:var(--r);transition:background .15s,color .15s;width:100%;}
+.mobile-nav button:hover{background:var(--ink-3);color:var(--white);}
+.mob-overlay{position:fixed;inset:0;z-index:190;background:rgba(0,0,0,0.6);display:none;}
+.mob-overlay.open{display:block;}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(14px);animation:revUp .5s ease forwards;}
+@keyframes revUp{to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<!-- ══ TICKER ══ -->
+<div class="ticker-bar">
+  <div class="ticker-label">&#9679; LIVE PRICES</div>
+  <div class="ticker-track">
+    <div class="ticker-inner" id="tickerEl">
+      <span class="up">COCOA ₦12,400/kg ▲+6.05%</span><span class="sep">|</span>
+      <span class="up">SESAME ₦2,850/kg ▲+4.20%</span><span class="sep">|</span>
+      <span class="up">MAIZE ₦680/kg ▲+6.02%</span><span class="sep">|</span>
+      <span class="dn">HIBISCUS ₦4,200/kg ▼-5.09%</span><span class="sep">|</span>
+      <span class="up">GINGER ₦3,100/kg ▲+0.25%</span><span class="sep">|</span>
+      <span class="dn">GROUNDNUT ₦1,850/kg ▼-4.03%</span><span class="sep">|</span>
+      <span class="up">CASHEW ₦5,600/kg ▲+2.15%</span><span class="sep">|</span>
+      <span class="dn">RCN ₦7,200/kg ▼-9.54%</span><span class="sep">|</span>
+      <span class="up">SOYBEANS ₦1,420/kg ▲+1.06%</span><span class="sep">|</span>
+      <!-- duplicate -->
+      <span class="up">COCOA ₦12,400/kg ▲+6.05%</span><span class="sep">|</span>
+      <span class="up">SESAME ₦2,850/kg ▲+4.20%</span><span class="sep">|</span>
+      <span class="up">MAIZE ₦680/kg ▲+6.02%</span><span class="sep">|</span>
+      <span class="dn">HIBISCUS ₦4,200/kg ▼-5.09%</span><span class="sep">|</span>
+      <span class="up">GINGER ₦3,100/kg ▲+0.25%</span><span class="sep">|</span>
+      <span class="dn">GROUNDNUT ₦1,850/kg ▼-4.03%</span><span class="sep">|</span>
+      <span class="up">CASHEW ₦5,600/kg ▲+2.15%</span><span class="sep">|</span>
+      <span class="dn">RCN ₦7,200/kg ▼-9.54%</span><span class="sep">|</span>
+      <span class="up">SOYBEANS ₦1,420/kg ▲+1.06%</span><span class="sep">|</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <div class="nav-logo" onclick="showSection('home')">
+    <div class="nav-badge">
+      <svg width="20" height="20" viewBox="0 0 160 160" fill="none">
+        <rect x="20" y="15" width="32" height="130" fill="white"/>
+        <rect x="108" y="15" width="32" height="130" fill="white"/>
+        <polygon points="52,15 84,15 108,145 76,145" fill="white"/>
+      </svg>
+    </div>
+    <div class="nav-logo-text">
+      <div class="t1">NISFA</div>
+      <div class="t2">Media House</div>
+    </div>
+  </div>
+
+  <ul class="nav-links">
+    <li><button onclick="showSection('prices')"    id="nb-prices">Prices</button></li>
+    <li><button onclick="showSection('live')"      id="nb-live" class="live-btn"><span class="live-dot"></span>Live</button></li>
+    <li><button onclick="showSection('programmes')" id="nb-programmes">Programmes</button></li>
+    <li><button onclick="showSection('about')"     id="nb-about">About NMH</button></li>
+  </ul>
+
+  <div class="nav-right">
+    <input class="nav-search" type="text" placeholder="Search…" oninput="handleSearch(this.value)">
+    <!-- Auth user bar (shown when logged in) -->
+    <div class="auth-user-bar" id="userBar">
+      <div class="user-avatar" id="userInitial">?</div>
+      <span class="user-email" id="userEmail"></span>
+      <button class="btn-signout" onclick="signOut()">Sign Out</button>
+    </div>
+    <!-- Admin button (shown when logged out) -->
+    <button class="btn-admin-nav" id="adminNavBtn" onclick="showSection('admin')">&#9881; Admin</button>
+    <div class="hamburger" onclick="toggleMobileNav()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Nav -->
+<div class="mob-overlay" id="mobOverlay" onclick="toggleMobileNav()"></div>
+<div class="mobile-nav" id="mobileNav">
+  <button onclick="showSection('prices');toggleMobileNav()">📊 Prices</button>
+  <button onclick="showSection('live');toggleMobileNav()">🔴 Live</button>
+  <button onclick="showSection('programmes');toggleMobileNav()">📺 Programmes</button>
+  <button onclick="showSection('about');toggleMobileNav()">ℹ️ About NMH</button>
+  <button onclick="showSection('admin');toggleMobileNav()">⚙️ Admin</button>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     HOME
+══════════════════════════════════════════════ -->
+<div id="sec-home" class="page-section active">
+  <div class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-bg"></div>
+    <div class="hero-content reveal">
+      <div class="hero-eyebrow">Nigeria's Agribusiness &amp; Trade Media Platform</div>
+      <h1>Market Intelligence.<br><em>On Air. On Time.</em></h1>
+      <p class="hero-sub">Daily commodity prices, live programme streaming, agribusiness insights and trade intelligence — powered by NISFA Media House.</p>
+      <div class="hero-ctas">
+        <button class="btn-primary" onclick="showSection('live')">▶ Watch Live Now</button>
+        <button class="btn-ghost" onclick="showSection('prices')">Today's Prices</button>
+      </div>
+    </div>
+    <div class="hero-stats" id="heroStats">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;color:var(--silver);text-transform:uppercase;margin-bottom:4px;">Live Prices</div>
+      <!-- populated by JS -->
+    </div>
+  </div>
+  <div class="wrap">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;padding:36px 0 0;">
+      <div class="pillar" onclick="showSection('prices')" style="border-top:3px solid var(--gold);">
+        <div style="font-size:26px;margin-bottom:6px;">📊</div>
+        <div class="p-name">Daily Price Update</div>
+        <div class="p-desc">Live commodity prices across 9 key markets — updated every day</div>
+      </div>
+      <div class="pillar" onclick="showSection('live')" style="border-top:3px solid var(--red);">
+        <div style="font-size:26px;margin-bottom:6px;">🔴</div>
+        <div class="p-name">Live Streaming</div>
+        <div class="p-desc">Watch NMH programmes live or on replay, any time</div>
+      </div>
+      <div class="pillar" onclick="showSection('programmes')" style="border-top:3px solid #2196F3;">
+        <div style="font-size:26px;margin-bottom:6px;">📺</div>
+        <div class="p-name">Programme Schedule</div>
+        <div class="p-desc">8 weekly shows + 3 monthly specials across all 8 content pillars</div>
+      </div>
+      <div class="pillar" onclick="showSection('about')" style="border-top:3px solid var(--green);">
+        <div style="font-size:26px;margin-bottom:6px;">🌍</div>
+        <div class="p-name">About NMH</div>
+        <div class="p-desc">Mission, content pillars and the team behind Nigeria's agri-media platform</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PRICES
+══════════════════════════════════════════════ -->
+<div id="sec-prices" class="page-section">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-head-left">
+        <div class="sec-eyebrow">Daily Update</div>
+        <div class="sec-title">Commodity Price Board</div>
+      </div>
+      <button class="sec-action" id="postPriceToggle" onclick="requireAuth(togglePostPanel)" style="display:none;">+ Post New Prices</button>
+    </div>
+    <div class="price-date-bar">
+      <div class="pdb-left">
+        <div class="pdb-dot"></div>
+        <div class="pdb-label">Live</div>
+        <div class="pdb-date" id="priceDate"></div>
+      </div>
+      <div class="pdb-src">Source: NISFA Media House Market Intelligence</div>
+    </div>
+    <!-- Post form (auth-gated, hidden by default) -->
+    <div class="form-panel" id="postPricePanel" style="display:none;">
+      <div class="panel-title">+ Post Today's Price Update</div>
+      <div class="form-grid">
+        <div class="form-group"><label class="form-label">Commodity</label>
+          <select class="form-select" id="pCommodity">
+            <option>Sesame</option><option>Soybeans</option><option>Maize</option>
+            <option>Hibiscus</option><option>Ginger</option><option>Groundnut</option>
+            <option>Cashew</option><option>Cocoa</option><option>RCN</option>
+          </select></div>
+        <div class="form-group"><label class="form-label">Price (₦)</label>
+          <input class="form-input" type="number" id="pPrice" placeholder="e.g. 2850"></div>
+        <div class="form-group"><label class="form-label">Unit</label>
+          <select class="form-select" id="pUnit"><option>per kg</option><option>per MT</option><option>per bag</option></select></div>
+        <div class="form-group"><label class="form-label">Change %</label>
+          <input class="form-input" type="text" id="pChange" placeholder="+6.05 or -3.2"></div>
+        <div class="form-group"><label class="form-label">Market Location</label>
+          <input class="form-input" type="text" id="pMarket" placeholder="Kano, Lagos…"></div>
+      </div>
+      <div class="form-group" style="margin-bottom:13px;">
+        <label class="form-label">Commentary (optional)</label>
+        <textarea class="form-input form-textarea" id="pNote" rows="2" placeholder="Market notes…"></textarea></div>
+      <div class="form-actions">
+        <button class="btn-post" onclick="postPrice()">Publish to Live Board</button>
+        <button class="btn-cancel-sm" onclick="togglePostPanel()">Cancel</button>
+      </div>
+    </div>
+    <div class="price-grid" id="priceGrid">
+      <div class="loading-row" style="grid-column:1/-1;"><div class="spinner"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     LIVE
+══════════════════════════════════════════════ -->
+<div id="sec-live" class="page-section">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-head-left">
+        <div class="sec-eyebrow">Broadcast</div>
+        <div class="sec-title">Live Streaming &amp; Replays</div>
+      </div>
+    </div>
+    <div class="live-layout">
+      <div class="live-player">
+        <div class="player-screen" id="playerScreen">
+          <span class="live-badge"><span class="live-dot"></span>LIVE</span>
+          <div class="player-placeholder" id="playerPlaceholder">
+            <div class="play-btn-circle" onclick="startStream()">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><polygon points="5,3 19,12 5,21" fill="white"/></svg>
+            </div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:var(--white);">NMH Live</div>
+            <div style="font-size:12px;color:var(--silver);">Click to connect to the live stream</div>
+          </div>
+        </div>
+        <div class="player-meta">
+          <div>
+            <div class="pm-show" id="liveShowTitle">NMH Daily Commodity Price Update</div>
+            <div class="pm-sub">Now Broadcasting · Updated Live</div>
+          </div>
+          <div class="pm-viewers" id="viewerCount">👁 Loading…</div>
+        </div>
+      </div>
+      <div class="upcoming-panel">
+        <div class="up-header">Weekly Programme Schedule</div>
+        <div class="up-list">
+          <div class="up-item"><div class="up-dot" style="background:var(--gold)"></div><div class="up-time">MON</div><div><div class="up-title">NMH Market Outlook</div><div class="up-day">15–20 mins · Exporters & Traders</div></div></div>
+          <div class="up-item"><div class="up-dot" style="background:#4CAF50"></div><div class="up-time">TUE</div><div><div class="up-title">NMH Agribusiness Today</div><div class="up-day">20–30 mins · Farmers & Investors</div></div></div>
+          <div class="up-item"><div class="up-dot" style="background:#2196F3"></div><div class="up-time">WED</div><div><div class="up-title">NMH Livestock & Dairy Day</div><div class="up-day">20–30 mins · Livestock Operators</div></div></div>
+          <div class="up-item"><div class="up-dot" style="background:#FF9800"></div><div class="up-time">THU</div><div><div class="up-title">NMH Logistics & Supply Chain</div><div class="up-day">15–20 mins · Exporters</div></div></div>
+          <div class="up-item"><div class="up-dot" style="background:#9C27B0"></div><div class="up-time">FRI</div><div><div class="up-title">NMH Trade & Export Desk</div><div class="up-day">20–30 mins · Exporters & Processors</div></div></div>
+          <div class="up-item"><div class="up-dot" style="background:#00BCD4"></div><div class="up-time">SAT</div><div><div class="up-title">NMH Community Dev Spotlight</div><div class="up-day">15–20 mins · Communities</div></div></div>
+          <div class="up-item"><div class="up-dot" style="background:var(--red)"></div><div class="up-time">SUN</div><div><div class="up-title">NMH CEO Business Forum</div><div class="up-day">20–30 mins · Entrepreneurs</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="stream-cta">
+      <div>
+        <div class="sc-title">Configure Your YouTube Live Stream</div>
+        <div class="sc-sub">Once you have your NMH YouTube Channel, paste the Channel ID in Admin → Stream to go live here.</div>
+      </div>
+      <button class="btn-post" onclick="requireAuth(() => showSection('admin'))">Configure Stream</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PROGRAMMES
+══════════════════════════════════════════════ -->
+<div id="sec-programmes" class="page-section">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-head-left">
+        <div class="sec-eyebrow">Full Schedule</div>
+        <div class="sec-title">NMH Programme Library</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:24px;" id="progFilters">
+      <button class="btn-post" style="font-size:10px;padding:6px 14px;" onclick="filterProgs('all',this)">All</button>
+      <button class="btn-ghost" style="font-size:10px;padding:6px 14px;" onclick="filterProgs('daily',this)">Daily</button>
+      <button class="btn-ghost" style="font-size:10px;padding:6px 14px;" onclick="filterProgs('weekly',this)">Weekly</button>
+      <button class="btn-ghost" style="font-size:10px;padding:6px 14px;" onclick="filterProgs('monthly',this)">Monthly</button>
+    </div>
+    <div class="progs-grid" id="progsGrid">
+      <div class="loading-row" style="grid-column:1/-1;"><div class="spinner"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     ABOUT
+══════════════════════════════════════════════ -->
+<div id="sec-about" class="page-section">
+  <div class="wrap" style="padding-top:44px;padding-bottom:44px;">
+    <div class="about-hero">
+      <div class="ah-label">Who We Are</div>
+      <div class="ah-title">NISFA Media House — NMH</div>
+      <div class="ah-body">NISFA Media House (NMH) is Nigeria's dedicated agribusiness, trade and market intelligence media platform — built to serve farmers, traders, exporters, investors and agribusiness operators with timely, credible and actionable information. Starting as a structured YouTube channel, NMH is on a clear roadmap to become NMH TV: a full dedicated agribusiness television network serving Nigeria and the wider African continent.</div>
+    </div>
+    <div class="sec-head" style="padding-top:28px;">
+      <div class="sec-head-left"><div class="sec-eyebrow">Foundation</div><div class="sec-title">Core Content Pillars</div></div>
+    </div>
+    <div class="pillars-grid">
+      <div class="pillar"><div class="p-num">01</div><div class="p-name">Market Intelligence</div><div class="p-desc">Daily commodity prices, forecasts and demand analysis</div></div>
+      <div class="pillar"><div class="p-num">02</div><div class="p-name">Agribusiness Development</div><div class="p-desc">Irrigation, mechanized farming, agro-processing and horticulture</div></div>
+      <div class="pillar"><div class="p-num">03</div><div class="p-name">Livestock &amp; Dairy</div><div class="p-desc">Cattle, dairy, poultry, goat, sheep and feed management</div></div>
+      <div class="pillar"><div class="p-num">04</div><div class="p-name">Logistics &amp; Supply Chain</div><div class="p-desc">Freight, port operations, warehousing and export logistics</div></div>
+      <div class="pillar"><div class="p-num">05</div><div class="p-name">International Trade</div><div class="p-desc">Export procedures, documentation and market access</div></div>
+      <div class="pillar"><div class="p-num">06</div><div class="p-name">Community Development</div><div class="p-desc">LGCC activities, CIP projects and community empowerment</div></div>
+      <div class="pillar"><div class="p-num">07</div><div class="p-name">Investment &amp; Finance</div><div class="p-desc">Agribusiness finance, banking and development agency partnerships</div></div>
+      <div class="pillar"><div class="p-num">08</div><div class="p-name">Entrepreneurship</div><div class="p-desc">Business strategy, leadership and financial intelligence</div></div>
+    </div>
+    <div class="sec-head" style="padding-top:0;">
+      <div class="sec-head-left"><div class="sec-eyebrow">The Team</div><div class="sec-title">Content Team</div></div>
+    </div>
+    <div class="team-grid">
+      <div class="team-card"><div class="tc-avatar" style="background:var(--red);">CEO</div><div class="tc-name">CEO / Host</div><div class="tc-role">CEO Business Forum · NISFA Global Enterprises Ltd</div></div>
+      <div class="team-card"><div class="tc-avatar" style="background:#2563EB;">EP</div><div class="tc-name">Executive Producer</div><div class="tc-role">Programme &amp; Scheduling Lead</div></div>
+      <div class="team-card"><div class="tc-avatar" style="background:#059669;">MA</div><div class="tc-name">Market Analyst</div><div class="tc-role">Daily Prices · Market Outlook</div></div>
+      <div class="team-card"><div class="tc-avatar" style="background:#7C3AED;">FP</div><div class="tc-name">Field Producer</div><div class="tc-role">Agribusiness · Livestock · Community</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     ADMIN
+══════════════════════════════════════════════ -->
+<div id="sec-admin" class="page-section">
+  <!-- Locked state (not logged in) -->
+  <div class="admin-locked" id="adminLocked">
+    <div class="lock-icon">🔒</div>
+    <div class="lock-title">Admin Access Required</div>
+    <div class="lock-sub">Sign in with your NMH team account to access the admin panel.</div>
+    <button class="btn-primary" onclick="openAuth()">Sign In to Admin</button>
+  </div>
+
+  <!-- Unlocked state -->
+  <div id="adminUnlocked" style="display:none;">
+    <div class="admin-layout">
+      <div class="admin-sidebar">
+        <div class="admin-sidebar-title">NMH Admin</div>
+        <div class="admin-nav-item active" onclick="showAdminPanel('dashboard',this)"><span>📊</span> Dashboard</div>
+        <div class="admin-nav-item" onclick="showAdminPanel('post-prices',this)"><span>💰</span> Post Prices</div>
+        <div class="admin-nav-item" onclick="showAdminPanel('stream',this)"><span>🔴</span> Live Stream</div>
+        <div class="admin-nav-item" onclick="showAdminPanel('programmes-mgmt',this)"><span>📺</span> Programmes</div>
+        <div class="admin-nav-item" onclick="showAdminPanel('team',this)"><span>👥</span> Team</div>
+      </div>
+      <div class="admin-body">
+
+        <!-- Dashboard -->
+        <div class="admin-panel active" id="ap-dashboard">
+          <div class="admin-panel-title">Dashboard</div>
+          <div class="stats-row">
+            <div class="stat-box"><div class="sb-label">Price Entries</div><div class="sb-val" id="statPrices">—</div><div class="sb-sub">In Firestore</div></div>
+            <div class="stat-box"><div class="sb-label">Programmes</div><div class="sb-val">11</div><div class="sb-sub">Scheduled this week</div></div>
+            <div class="stat-box"><div class="sb-label">Stream Status</div><div class="sb-val" id="statStream" style="font-size:14px;margin-top:4px;">Offline</div><div class="sb-sub">YouTube Live</div></div>
+            <div class="stat-box"><div class="sb-label">Team Members</div><div class="sb-val">4</div><div class="sb-sub">Active users</div></div>
+          </div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--silver);margin-bottom:12px;">Recent Price Posts</div>
+          <div id="dashPriceLog"><div class="loading-row"><div class="spinner"></div></div></div>
+        </div>
+
+        <!-- Post Prices -->
+        <div class="admin-panel" id="ap-post-prices">
+          <div class="admin-panel-title">Post Price Update</div>
+          <div class="form-panel" style="margin-bottom:0;">
+            <div class="panel-title">New Commodity Price Entry</div>
+            <div class="form-grid">
+              <div class="form-group"><label class="form-label">Commodity</label>
+                <select class="form-select" id="aCommodity"><option>Sesame</option><option>Soybeans</option><option>Maize</option><option>Hibiscus</option><option>Ginger</option><option>Groundnut</option><option>Cashew</option><option>Cocoa</option><option>RCN</option></select></div>
+              <div class="form-group"><label class="form-label">Price (₦)</label><input class="form-input" type="number" id="aPrice" placeholder="2850"></div>
+              <div class="form-group"><label class="form-label">Unit</label><select class="form-select" id="aUnit"><option>per kg</option><option>per MT</option><option>per bag</option></select></div>
+              <div class="form-group"><label class="form-label">Change %</label><input class="form-input" id="aChange" placeholder="+6.05 or -3.2"></div>
+              <div class="form-group"><label class="form-label">Market</label><input class="form-input" id="aMarket" placeholder="Kano, Lagos…"></div>
+              <div class="form-group"><label class="form-label">Date</label><input class="form-input" type="date" id="aDate"></div>
+            </div>
+            <div class="form-group" style="margin-bottom:13px;"><label class="form-label">Market Commentary</label>
+              <textarea class="form-input form-textarea" id="aNote" rows="3" placeholder="Optional notes…"></textarea></div>
+            <div class="form-actions">
+              <button class="btn-post" onclick="adminPostPrice()">Publish to Live Board</button>
+              <button class="btn-cancel-sm" onclick="showToast('Draft saved locally')">Save Draft</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stream Config -->
+        <div class="admin-panel" id="ap-stream">
+          <div class="admin-panel-title">Live Stream Configuration</div>
+          <div class="form-panel" style="margin-bottom:0;">
+            <div class="panel-title">🔴 YouTube Live Integration</div>
+            <div class="form-grid">
+              <div class="form-group" style="grid-column:1/-1;"><label class="form-label">YouTube Channel ID or Live Stream URL</label>
+                <input class="form-input" id="ytChannelId" placeholder="e.g. UCxxxxxxxxxxxxxxxxxxxxxx or full YouTube Live URL"></div>
+              <div class="form-group"><label class="form-label">Programme Title</label><input class="form-input" id="streamTitle" placeholder="e.g. NMH Market Outlook"></div>
+              <div class="form-group"><label class="form-label">Scheduled Time</label><input class="form-input" type="time" id="streamTime"></div>
+            </div>
+            <div class="form-actions">
+              <button class="btn-post" onclick="saveStreamConfig()">Save & Go Live</button>
+              <button class="btn-cancel-sm" onclick="saveStreamConfig(true)">Schedule Only</button>
+            </div>
+          </div>
+          <div style="margin-top:16px;background:var(--ink-4);border-radius:var(--r);padding:16px 18px;">
+            <div style="font-size:11px;color:var(--silver);line-height:1.8;">
+              <strong style="color:var(--gold);font-family:'Barlow Condensed',sans-serif;letter-spacing:2px;font-size:10px;text-transform:uppercase;">How to get your YouTube Channel ID:</strong><br>
+              1. Go to your YouTube Studio → Settings → Channel → Advanced settings<br>
+              2. Copy the Channel ID (starts with UC…)<br>
+              3. Paste it above → the live player will embed your stream automatically
+            </div>
+          </div>
+        </div>
+
+        <!-- Programmes Mgmt -->
+        <div class="admin-panel" id="ap-programmes-mgmt">
+          <div class="admin-panel-title">Manage Programmes</div>
+          <table class="data-table">
+            <thead><tr><th>Programme</th><th>Day</th><th>Duration</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>NMH Daily Commodity Price Update</td><td>Every Day</td><td>5–10 mins</td><td><span class="badge-sm badge-live">Active</span></td></tr>
+              <tr><td>NMH Market Outlook</td><td>Monday</td><td>15–20 mins</td><td><span class="badge-sm badge-live">Active</span></td></tr>
+              <tr><td>NMH Agribusiness Today</td><td>Tuesday</td><td>20–30 mins</td><td><span class="badge-sm badge-live">Active</span></td></tr>
+              <tr><td>NMH Livestock &amp; Dairy Day</td><td>Wednesday</td><td>20–30 mins</td><td><span class="badge-sm badge-live">Active</span></td></tr>
+              <tr><td>NMH Logistics &amp; Supply Chain</td><td>Thursday</td><td>15–20 mins</td><td><span class="badge-sm badge-live">Active</span></td></tr>
+              <tr><td>NMH Trade &amp; Export Desk</td><td>Friday</td><td>20–30 mins</td><td><span class="badge-sm badge-live">Active</span></td></tr>
+              <tr><td>NMH Community Dev Spotlight</td><td>Saturday</td><td>15–20 mins</td><td><span class="badge-sm badge-live">Active</span></td></tr>
+              <tr><td>NMH CEO Business Forum</td><td>Sunday</td><td>20–30 mins</td><td><span class="badge-sm badge-live">Active</span></td></tr>
+              <tr><td>NMH Exporters Roundtable</td><td>Monthly</td><td>TBC</td><td><span class="badge-sm badge-sched">Scheduled</span></td></tr>
+              <tr><td>NMH Investment Forum</td><td>Monthly</td><td>TBC</td><td><span class="badge-sm badge-sched">Scheduled</span></td></tr>
+              <tr><td>NMH Global Market Review</td><td>Monthly</td><td>TBC</td><td><span class="badge-sm badge-sched">Scheduled</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Team -->
+        <div class="admin-panel" id="ap-team">
+          <div class="admin-panel-title">Team Management</div>
+          <div style="margin-bottom:14px;display:flex;justify-content:flex-end;">
+            <button class="btn-post" onclick="showToast('Invite via Firebase Console → Authentication → Add user')">+ Invite Member</button>
+          </div>
+          <table class="data-table">
+            <thead><tr><th>Email</th><th>Role</th><th>Access</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td id="adminEmailRow">—</td><td>CEO / Host</td><td>Super Admin</td><td><span class="badge-sm badge-live">Active</span></td></tr>
+              <tr><td>producer@nmh.com</td><td>Executive Producer</td><td>Admin</td><td><span class="badge-sm badge-live">Active</span></td></tr>
+              <tr><td>analyst@nmh.com</td><td>Market Analyst</td><td>Editor</td><td><span class="badge-sm badge-live">Active</span></td></tr>
+              <tr><td>field@nmh.com</td><td>Field Producer</td><td>Editor</td><td><span class="badge-sm badge-sched">Pending</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-top">
+    <div class="ft-brand">
+      <div class="fb-name">NISFA</div>
+      <div class="fb-sub">Media House</div>
+      <p>Nigeria's dedicated agribusiness, trade &amp; market intelligence platform. From YouTube to NMH TV.</p>
+    </div>
+    <div class="ft-col">
+      <div class="ft-col-title">Programmes</div>
+      <ul>
+        <li><a onclick="showSection('programmes')">Market Outlook</a></li>
+        <li><a onclick="showSection('programmes')">Agribusiness Today</a></li>
+        <li><a onclick="showSection('programmes')">Livestock &amp; Dairy Day</a></li>
+        <li><a onclick="showSection('programmes')">Trade &amp; Export Desk</a></li>
+        <li><a onclick="showSection('programmes')">CEO Business Forum</a></li>
+      </ul>
+    </div>
+    <div class="ft-col">
+      <div class="ft-col-title">Commodities</div>
+      <ul>
+        <li><a onclick="showSection('prices')">Sesame · Soybeans</a></li>
+        <li><a onclick="showSection('prices')">Maize · Hibiscus</a></li>
+        <li><a onclick="showSection('prices')">Ginger · Groundnut</a></li>
+        <li><a onclick="showSection('prices')">Cashew · Cocoa · RCN</a></li>
+      </ul>
+    </div>
+    <div class="ft-col">
+      <div class="ft-col-title">Connect</div>
+      <ul>
+        <li><a href="https://youtube.com" target="_blank">YouTube Channel</a></li>
+        <li><a href="#">WhatsApp Updates</a></li>
+        <li><a href="#">Twitter / X</a></li>
+        <li><a href="#">LinkedIn</a></li>
+        <li><a onclick="showSection('admin')">Admin Login</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="fb-copy">© 2025 NISFA Media House · NISFA Global Enterprises Limited · All rights reserved</div>
+    <div class="fb-tag">NMH · ON AIR · ON TIME</div>
+  </div>
+</footer>
+
+<!-- Auth Modal -->
+<div class="auth-overlay" id="authOverlay">
+  <div class="auth-box">
+    <button class="auth-close" onclick="closeAuth()">✕</button>
+    <div class="auth-logo">
+      <div class="nav-badge" style="width:30px;height:30px;">
+        <svg width="17" height="17" viewBox="0 0 160 160" fill="none">
+          <rect x="20" y="15" width="32" height="130" fill="white"/>
+          <rect x="108" y="15" width="32" height="130" fill="white"/>
+          <polygon points="52,15 84,15 108,145 76,145" fill="white"/>
+        </svg>
+      </div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:13px;letter-spacing:3px;color:var(--white);">NMH Admin</div>
+    </div>
+    <div class="auth-title" id="authTitle">Sign In</div>
+    <div class="auth-sub" id="authSubtitle">Use your NMH team email and password.</div>
+    <div class="auth-error" id="authError"></div>
+    <div class="auth-form">
+      <div class="form-group"><label class="form-label">Email</label>
+        <input class="form-input" type="email" id="authEmail" placeholder="you@nmh.com" autocomplete="email"></div>
+      <div class="form-group"><label class="form-label">Password</label>
+        <input class="form-input" type="password" id="authPassword" placeholder="••••••••" autocomplete="current-password"
+          onkeydown="if(event.key==='Enter')submitAuth()"></div>
+      <button class="btn-signin" onclick="submitAuth()" id="authSubmitBtn">Sign In</button>
+    </div>
+    <div class="auth-switch" id="authSwitch">
+      No account? <span onclick="toggleAuthMode()">Create one</span>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- ══════════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════════ -->
+<script>
+// ══════════════════════════════════════════════
+//  FIREBASE CONFIG
+//  !! REPLACE with values from firebase-config.js !!
+// ══════════════════════════════════════════════
+const firebaseConfig = {
+  apiKey:            "AIzaSyB2NDXqpjD_qtWCFn7JSUj1GPkyc0tUgs8",
+  authDomain:        "nmh-nisfa-media.firebaseapp.com",
+  projectId:         "nmh-nisfa-media",
+  storageBucket:     "nmh-nisfa-media.firebasestorage.app",
+  messagingSenderId: "55057883884",
+  appId:             "1:55057883884:web:fa20b63864e65114487bc9",
+  measurementId:     "G-1PCQE7ESRE"
+};
+
+// ── Init Firebase ──
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db   = firebase.firestore();
+
+// demo mode flag (no real Firebase config pasted yet)
+const DEMO_MODE = false; // Firebase connected — nmh-nisfa-media
+if (DEMO_MODE) console.warn("NMH: Running in DEMO MODE — paste your Firebase config to enable live data.");
+
+// ── Local fallback price data ──
+const defaultPrices = [
+  { id:'cocoa',     commodity:'Cocoa',     price:12400, unit:'per kg', change:'+6.05%', dir:'up',   market:'Lagos'  },
+  { id:'sesame',    commodity:'Sesame',    price:2850,  unit:'per kg', change:'+4.20%', dir:'up',   market:'Kano'   },
+  { id:'soybeans',  commodity:'Soybeans',  price:1420,  unit:'per kg', change:'+1.06%', dir:'up',   market:'Abuja'  },
+  { id:'maize',     commodity:'Maize',     price:680,   unit:'per kg', change:'+6.02%', dir:'up',   market:'Kaduna' },
+  { id:'hibiscus',  commodity:'Hibiscus',  price:4200,  unit:'per kg', change:'-5.09%', dir:'down', market:'Kano'   },
+  { id:'ginger',    commodity:'Ginger',    price:3100,  unit:'per kg', change:'+0.25%', dir:'up',   market:'Kaduna' },
+  { id:'groundnut', commodity:'Groundnut', price:1850,  unit:'per kg', change:'-4.03%', dir:'down', market:'Kano'   },
+  { id:'cashew',    commodity:'Cashew',    price:5600,  unit:'per kg', change:'+2.15%', dir:'up',   market:'Ogun'   },
+  { id:'rcn',       commodity:'RCN',       price:7200,  unit:'per kg', change:'-9.54%', dir:'down', market:'Ogun'   },
+];
+
+// ── Local programme data ──
+const programmes = [
+  {id:1,title:'NMH Daily Commodity Price Update',day:'Every Day',freq:'daily',dur:'5–10 mins',color:'#C9A84C',tags:['Sesame','Maize','Cocoa','RCN','Ginger'],desc:'Live commodity prices and market trends across 9 key agri-commodities — published every single day.'},
+  {id:2,title:'NMH Market Outlook',day:'Monday',freq:'weekly',dur:'15–20 mins',color:'#C9A84C',tags:['Forecast','Exchange Rate','Export Demand'],desc:'Weekly price forecasts, export demand analysis and market opportunities for traders and exporters.'},
+  {id:3,title:'NMH Agribusiness Today',day:'Tuesday',freq:'weekly',dur:'20–30 mins',color:'#4CAF50',tags:['Irrigation','Greenhouse','Mechanized','Agro'],desc:'Farming innovations and agribusiness investment opportunities for farmers and investors.'},
+  {id:4,title:'NMH Livestock & Dairy Day',day:'Wednesday',freq:'weekly',dur:'20–30 mins',color:'#2196F3',tags:['Cattle','Dairy','Poultry','Goat','Feed'],desc:'Livestock sector development — cattle, dairy production, poultry, goat farming and feed management.'},
+  {id:5,title:'NMH Logistics & Supply Chain',day:'Thursday',freq:'weekly',dur:'15–20 mins',color:'#FF9800',tags:['Freight','Port Ops','Warehousing','Exports'],desc:'Container availability, freight rates, port operations and export logistics for trade professionals.'},
+  {id:6,title:'NMH Trade & Export Desk',day:'Friday',freq:'weekly',dur:'20–30 mins',color:'#9C27B0',tags:['Buyers','Documentation','Market Access'],desc:'International trade opportunities, export documentation and market access for exporters.'},
+  {id:7,title:'NMH Community Dev Spotlight',day:'Saturday',freq:'weekly',dur:'15–20 mins',color:'#00BCD4',tags:['LGCC','CIP Projects','Empowerment'],desc:'LGCC activities, CIP projects and community empowerment stories every Saturday.'},
+  {id:8,title:'NMH CEO Business Forum',day:'Sunday',freq:'weekly',dur:'20–30 mins',color:'#ef5350',tags:['Strategy','Finance','Leadership'],desc:'Hosted by the CEO of NISFA Global Enterprises — agribusiness strategy, entrepreneurship and financial intelligence.'},
+  {id:9,title:'NMH Exporters Roundtable',day:'Monthly',freq:'monthly',dur:'TBC',color:'#5570a0',tags:['Exporters','Freight','Buyers'],desc:'Monthly roundtable bringing together exporters, freight forwarders, buyers and commodity associations.'},
+  {id:10,title:'NMH Investment Forum',day:'Monthly',freq:'monthly',dur:'TBC',color:'#5570a0',tags:['Investors','Banks','Dev Agencies'],desc:'Monthly forum for investors, banks, development agencies and agribusiness companies.'},
+  {id:11,title:'NMH Global Market Review',day:'Monthly',freq:'monthly',dur:'TBC',color:'#5570a0',tags:['China','India','UAE','Europe','Africa'],desc:'Monthly global market analysis covering China, India, UAE, Saudi Arabia, Europe and Africa.'},
+];
+
+// ══════════════════════════════════════════════
+//  AUTH STATE
+// ══════════════════════════════════════════════
+let currentUser = null;
+let authMode = 'signin'; // or 'signup'
+
+auth.onAuthStateChanged(user => {
+  currentUser = user;
+  const userBar   = document.getElementById('userBar');
+  const adminBtn  = document.getElementById('adminNavBtn');
+  const postBtn   = document.getElementById('postPriceToggle');
+
+  if (user) {
+    userBar.classList.add('show');
+    adminBtn.style.display = 'none';
+    postBtn.style.display  = 'inline-block';
+    document.getElementById('userInitial').textContent = user.email[0].toUpperCase();
+    document.getElementById('userEmail').textContent   = user.email;
+    document.getElementById('adminEmailRow').textContent = user.email;
+    // show admin unlocked
+    document.getElementById('adminLocked').style.display   = 'none';
+    document.getElementById('adminUnlocked').style.display = 'block';
+    loadDashboardStats();
+    closeAuth();
+  } else {
+    userBar.classList.remove('show');
+    adminBtn.style.display = 'inline-block';
+    postBtn.style.display  = 'none';
+    document.getElementById('adminLocked').style.display   = 'block';
+    document.getElementById('adminUnlocked').style.display = 'none';
+  }
+});
+
+function requireAuth(fn) {
+  if (currentUser) { fn(); }
+  else { openAuth(); }
+}
+
+// ── Auth modal ──
+function openAuth()  { document.getElementById('authOverlay').classList.add('open'); setTimeout(()=>document.getElementById('authEmail').focus(),100); }
+function closeAuth() { document.getElementById('authOverlay').classList.remove('open'); clearAuthError(); }
+
+function toggleAuthMode() {
+  authMode = authMode === 'signin' ? 'signup' : 'signin';
+  document.getElementById('authTitle').textContent    = authMode === 'signin' ? 'Sign In' : 'Create Account';
+  document.getElementById('authSubtitle').textContent = authMode === 'signin' ? 'Use your NMH team email and password.' : 'Register a new NMH team account.';
+  document.getElementById('authSubmitBtn').textContent = authMode === 'signin' ? 'Sign In' : 'Create Account';
+  document.getElementById('authSwitch').innerHTML = authMode === 'signin'
+    ? 'No account? <span onclick="toggleAuthMode()">Create one</span>'
+    : 'Already have an account? <span onclick="toggleAuthMode()">Sign in</span>';
+  clearAuthError();
+}
+
+function submitAuth() {
+  const email    = document.getElementById('authEmail').value.trim();
+  const password = document.getElementById('authPassword').value;
+  if (!email || !password) { showAuthError('Please enter your email and password.'); return; }
+
+  if (DEMO_MODE) {
+    showToast('✅ Demo mode — Firebase not connected yet. Simulating login…');
+    setTimeout(() => { closeAuth(); showToast('Welcome to NMH Admin (Demo Mode)'); simulateDemoLogin(); }, 800);
+    return;
+  }
+
+  const btn = document.getElementById('authSubmitBtn');
+  btn.textContent = '…'; btn.disabled = true;
+
+  const promise = authMode === 'signin'
+    ? auth.signInWithEmailAndPassword(email, password)
+    : auth.createUserWithEmailAndPassword(email, password);
+
+  promise
+    .then(() => { btn.textContent = authMode === 'signin' ? 'Sign In' : 'Create Account'; btn.disabled = false; })
+    .catch(err => {
+      btn.textContent = authMode === 'signin' ? 'Sign In' : 'Create Account'; btn.disabled = false;
+      const msgs = { 'auth/user-not-found':'No account found with this email.','auth/wrong-password':'Incorrect password.','auth/invalid-email':'Please enter a valid email address.','auth/email-already-in-use':'An account with this email already exists.','auth/weak-password':'Password must be at least 6 characters.' };
+      showAuthError(msgs[err.code] || err.message);
+    });
+}
+
+function signOut() {
+  if (DEMO_MODE) { currentUser = null; auth.signOut().catch(()=>{}); showToast('Signed out'); return; }
+  auth.signOut().then(() => showToast('Signed out successfully'));
+}
+
+function simulateDemoLogin() {
+  // for demo without Firebase
+  document.getElementById('userBar').classList.add('show');
+  document.getElementById('adminNavBtn').style.display = 'none';
+  document.getElementById('postPriceToggle').style.display = 'inline-block';
+  document.getElementById('userInitial').textContent = 'C';
+  document.getElementById('userEmail').textContent   = 'ceo@nmh.com';
+  document.getElementById('adminLocked').style.display   = 'none';
+  document.getElementById('adminUnlocked').style.display = 'block';
+  currentUser = { email:'ceo@nmh.com', uid:'demo' };
+  loadDashboardStats();
+}
+
+function showAuthError(msg) { const el=document.getElementById('authError'); el.textContent=msg; el.classList.add('show'); }
+function clearAuthError()   { document.getElementById('authError').classList.remove('show'); }
+
+// ══════════════════════════════════════════════
+//  FIRESTORE — PRICES
+// ══════════════════════════════════════════════
+function loadPrices() {
+  if (DEMO_MODE) { renderPriceGrid(defaultPrices); updateHeroStats(defaultPrices); return; }
+
+  db.collection('prices').orderBy('timestamp','desc').limit(50)
+    .onSnapshot(snap => {
+      if (snap.empty) { renderPriceGrid(defaultPrices); updateHeroStats(defaultPrices); return; }
+      // group by commodity — latest per commodity
+      const map = {};
+      snap.forEach(doc => {
+        const d = { id:doc.id, ...doc.data() };
+        if (!map[d.commodity]) map[d.commodity] = d;
+      });
+      const list = Object.values(map);
+      renderPriceGrid(list);
+      updateHeroStats(list);
+      updateTickerFromData(list);
+      updateDashLog(list.slice(0,8));
+      document.getElementById('statPrices').textContent = snap.size;
+    }, err => { console.error(err); renderPriceGrid(defaultPrices); });
+}
+
+function renderPriceGrid(data) {
+  document.getElementById('priceGrid').innerHTML = data.map(p => {
+    const dir = p.dir || (p.change && p.change.startsWith('+') ? 'up' : 'down');
+    const priceStr = typeof p.price === 'number' ? '₦' + p.price.toLocaleString() : p.price;
+    return `<div class="price-card ${dir}">
+      <div class="pc-commodity">${p.commodity}</div>
+      <div class="pc-price">${priceStr}</div>
+      <div class="pc-unit">${p.unit || 'per kg'}${p.market ? ' · ' + p.market : ''}</div>
+      <div class="pc-change ${dir}">${dir==='up'?'▲':dir==='down'?'▼':'—'} ${p.change || '0.00%'}</div>
+      <div class="pc-bg">${p.commodity.substring(0,3).toUpperCase()}</div>
+    </div>`;
+  }).join('');
+}
+
+function updateHeroStats(data) {
+  const hs = document.getElementById('heroStats');
+  const html = data.slice(0,6).map(p => {
+    const dir = p.dir || (p.change&&p.change.startsWith('+') ? 'up':'down');
+    const priceStr = typeof p.price==='number' ? '₦'+p.price.toLocaleString() : p.price;
+    return `<div class="stat-item">
+      <div class="stat-label">${p.commodity}</div>
+      <div class="stat-commodity">${priceStr}/kg</div>
+      <div class="stat-change ${dir}">${dir==='up'?'▲':'▼'} ${p.change||''}</div>
+    </div>`;
+  }).join('');
+  hs.innerHTML = '<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;color:var(--silver);text-transform:uppercase;margin-bottom:4px;">Live Prices</div>' + html;
+}
+
+function updateTickerFromData(data) {
+  const inner = document.getElementById('tickerEl');
+  const items = data.map(p => {
+    const dir = p.dir || (p.change&&p.change.startsWith('+') ? 'up':'down');
+    const priceStr = typeof p.price==='number' ? '₦'+p.price.toLocaleString() : p.price;
+    return `<span class="${dir}">${p.commodity.toUpperCase()} ${priceStr}/kg ${dir==='up'?'▲':'▼'}${p.change||''}</span><span class="sep">|</span>`;
+  }).join('');
+  inner.innerHTML = items + items; // duplicate for loop
+}
+
+function postPrice() {
+  const commodity = document.getElementById('pCommodity').value;
+  const price     = parseFloat(document.getElementById('pPrice').value);
+  const unit      = document.getElementById('pUnit').value;
+  const change    = document.getElementById('pChange').value.trim();
+  const market    = document.getElementById('pMarket').value.trim();
+  const note      = document.getElementById('pNote').value.trim();
+  if (!price) { showToast('⚠️ Please enter a price', true); return; }
+  const dir = change.startsWith('-') ? 'down' : 'up';
+  const entry = { commodity, price, unit, change, dir, market, note, timestamp: DEMO_MODE ? Date.now() : firebase.firestore.FieldValue.serverTimestamp(), postedBy: currentUser?.email || 'team' };
+  if (DEMO_MODE) {
+    defaultPrices.unshift(entry);
+    renderPriceGrid(defaultPrices);
+    togglePostPanel();
+    showToast('✅ ' + commodity + ' price published! (Demo mode)');
+    return;
+  }
+  db.collection('prices').add(entry)
+    .then(() => { togglePostPanel(); showToast('✅ ' + commodity + ' price published to live board!'); })
+    .catch(err => showToast('Error: ' + err.message, true));
+}
+
+function adminPostPrice() {
+  const commodity = document.getElementById('aCommodity').value;
+  const price     = parseFloat(document.getElementById('aPrice').value);
+  const unit      = document.getElementById('aUnit').value;
+  const change    = document.getElementById('aChange').value.trim();
+  const market    = document.getElementById('aMarket').value.trim();
+  const note      = document.getElementById('aNote').value.trim();
+  if (!price) { showToast('⚠️ Please enter a price', true); return; }
+  const dir = change.startsWith('-') ? 'down' : 'up';
+  const entry = { commodity, price, unit, change, dir, market, note, timestamp: DEMO_MODE ? Date.now() : firebase.firestore.FieldValue.serverTimestamp(), postedBy: currentUser?.email || 'admin' };
+  if (DEMO_MODE) { defaultPrices.unshift(entry); renderPriceGrid(defaultPrices); showToast('✅ ' + commodity + ' price published! (Demo)'); return; }
+  db.collection('prices').add(entry)
+    .then(() => showToast('✅ ' + commodity + ' price published!'))
+    .catch(err => showToast('Error: ' + err.message, true));
+}
+
+function togglePostPanel() {
+  const p = document.getElementById('postPricePanel');
+  p.style.display = p.style.display === 'none' ? 'block' : 'none';
+}
+
+// ══════════════════════════════════════════════
+//  STREAM CONFIG
+// ══════════════════════════════════════════════
+function saveStreamConfig(scheduleOnly) {
+  const channelId   = document.getElementById('ytChannelId').value.trim();
+  const title       = document.getElementById('streamTitle').value.trim();
+  if (!channelId) { showToast('⚠️ Please enter your YouTube Channel ID', true); return; }
+
+  // embed the live stream
+  const playerScreen = document.getElementById('playerScreen');
+  const embedUrl = channelId.startsWith('http')
+    ? channelId.replace('watch?v=', 'embed/') + '?autoplay=1'
+    : `https://www.youtube.com/embed/live_stream?channel=${channelId}&autoplay=1`;
+
+  playerScreen.innerHTML = `<iframe src="${embedUrl}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+  if (title) document.getElementById('liveShowTitle').textContent = title;
+  document.getElementById('statStream').textContent = scheduleOnly ? 'Scheduled' : '🔴 Live';
+
+  if (!DEMO_MODE) {
+    db.collection('streams').doc('current').set({ channelId, title, live: !scheduleOnly, updatedAt: firebase.firestore.FieldValue.serverTimestamp(), updatedBy: currentUser?.email });
+  }
+  showToast(scheduleOnly ? '✅ Stream scheduled!' : '🔴 Stream is now LIVE!');
+}
+
+// load stream config on startup
+function loadStreamConfig() {
+  if (DEMO_MODE) return;
+  db.collection('streams').doc('current').get().then(doc => {
+    if (doc.exists) {
+      const d = doc.data();
+      if (d.channelId) {
+        document.getElementById('ytChannelId').value = d.channelId;
+        document.getElementById('streamTitle').value  = d.title || '';
+        if (d.live) {
+          const embedUrl = d.channelId.startsWith('http')
+            ? d.channelId.replace('watch?v=','embed/') + '?autoplay=0'
+            : `https://www.youtube.com/embed/live_stream?channel=${d.channelId}&autoplay=0`;
+          document.getElementById('playerScreen').innerHTML = `<iframe src="${embedUrl}" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+          if (d.title) document.getElementById('liveShowTitle').textContent = d.title;
+        }
+      }
+    }
+  });
+}
+
+function startStream() {
+  if (DEMO_MODE) {
+    document.getElementById('playerScreen').innerHTML = `
+      <div style="position:absolute;inset:0;background:#000;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;">
+        <div style="color:var(--red);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:2px;">DEMO MODE</div>
+        <div style="font-size:12px;color:var(--silver);">Paste your YouTube Channel ID in Admin → Stream to go live</div>
+        <span class="live-badge" style="position:static;"><span class="live-dot"></span>CONNECTING…</span>
+      </div>`;
+    return;
+  }
+  loadStreamConfig();
+}
+
+// ══════════════════════════════════════════════
+//  DASHBOARD STATS
+// ══════════════════════════════════════════════
+function loadDashboardStats() {
+  if (DEMO_MODE) {
+    updateDashLog(defaultPrices.slice(0,6));
+    document.getElementById('statPrices').textContent = defaultPrices.length;
+    return;
+  }
+  db.collection('prices').orderBy('timestamp','desc').limit(6).get()
+    .then(snap => { const list=[]; snap.forEach(d=>list.push({id:d.id,...d.data()})); updateDashLog(list); document.getElementById('statPrices').textContent = snap.size; })
+    .catch(()=>{});
+}
+
+function updateDashLog(list) {
+  if (!list.length) return;
+  document.getElementById('dashPriceLog').innerHTML = `
+    <table class="data-table">
+      <thead><tr><th>Commodity</th><th>Price</th><th>Change</th><th>Market</th><th>Posted By</th></tr></thead>
+      <tbody>${list.map(p=>{
+        const priceStr = typeof p.price==='number'?'₦'+p.price.toLocaleString():p.price;
+        const dir = p.dir||(p.change&&p.change.startsWith('+')?'up':'down');
+        return `<tr><td>${p.commodity}</td><td>${priceStr}</td>
+          <td style="color:${dir==='up'?'var(--green)':'#ef5350'}">${dir==='up'?'▲':'▼'} ${p.change||''}</td>
+          <td>${p.market||'—'}</td><td>${p.postedBy||'—'}</td></tr>`;
+      }).join('')}</tbody>
+    </table>`;
+}
+
+// ══════════════════════════════════════════════
+//  NAVIGATION
+// ══════════════════════════════════════════════
+function showSection(id) {
+  document.querySelectorAll('.page-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-links button').forEach(b=>b.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  const nb = document.getElementById('nb-'+id);
+  if (nb) nb.classList.add('active');
+  window.scrollTo(0,0);
+  if (id==='prices') { loadPrices(); }
+  if (id==='programmes') { renderProgs('all'); }
+  if (id==='admin' && currentUser) { loadDashboardStats(); }
+}
+
+function showAdminPanel(id, el) {
+  document.querySelectorAll('.admin-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.admin-nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('ap-'+id).classList.add('active');
+  el.classList.add('active');
+}
+
+function toggleMobileNav() {
+  document.getElementById('mobileNav').classList.toggle('open');
+  document.getElementById('mobOverlay').classList.toggle('open');
+}
+
+// ══════════════════════════════════════════════
+//  PROGRAMMES
+// ══════════════════════════════════════════════
+function renderProgs(filter) {
+  const src = filter==='all' ? programmes : programmes.filter(p=>p.freq===filter);
+  document.getElementById('progsGrid').innerHTML = src.map(p=>`
+    <div class="prog-card">
+      <div class="pc-thumb" style="background:linear-gradient(135deg,${p.color}20,${p.color}08);">
+        <div class="pc-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><polygon points="5,3 19,12 5,21" fill="white"/></svg></div>
+        <span class="pc-day-badge" style="background:${p.color}22;color:${p.color};border:1px solid ${p.color}44;">${p.day}</span>
+        <span style="font-family:'Barlow Condensed',sans-serif;font-size:48px;font-weight:900;color:${p.color};opacity:0.1;">${p.id}</span>
+      </div>
+      <div class="pc-body">
+        <div class="pc-meta"><span class="pc-freq">${p.freq}</span><span style="color:var(--ash)">·</span><span style="font-size:10px;color:var(--silver);">${p.dur}</span></div>
+        <div class="pc-title">${p.title}</div>
+        <div class="pc-desc">${p.desc}</div>
+        <div class="pc-tags">${p.tags.map(t=>`<span class="pc-tag">${t}</span>`).join('')}</div>
+      </div>
+    </div>`).join('');
+}
+
+function filterProgs(filter, btn) {
+  document.querySelectorAll('#progFilters button').forEach(b=>{b.className='btn-ghost';b.style.cssText='font-size:10px;padding:6px 14px;';});
+  btn.className='btn-post'; btn.style.cssText='font-size:10px;padding:6px 14px;';
+  renderProgs(filter);
+}
+
+// ══════════════════════════════════════════════
+//  SEARCH
+// ══════════════════════════════════════════════
+function handleSearch(query) {
+  if (!query.trim()) return;
+  const q = query.toLowerCase();
+  const match = programmes.find(p => p.title.toLowerCase().includes(q) || p.tags.some(t=>t.toLowerCase().includes(q)));
+  if (match) { showSection('programmes'); setTimeout(()=>{ filterProgs('all', document.querySelector('#progFilters button')); showToast('Showing results for: ' + query); }, 100); }
+}
+
+// ══════════════════════════════════════════════
+//  TOAST
+// ══════════════════════════════════════════════
+let toastT;
+function showToast(msg, err=false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (err ? ' err' : '');
+  clearTimeout(toastT);
+  toastT = setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+// ══════════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  // date
+  document.getElementById('priceDate').textContent = new Date().toLocaleDateString('en-NG', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+  // viewer count simulation
+  let viewers = 1240;
+  setInterval(()=>{ viewers += Math.floor(Math.random()*6)-2; document.getElementById('viewerCount').textContent = '👁 ' + viewers.toLocaleString() + ' watching'; }, 4000);
+
+  // default admin date
+  const dateInput = document.getElementById('aDate');
+  if (dateInput) dateInput.value = new Date().toISOString().split('T')[0];
+
+  // load data
+  loadPrices();
+  renderProgs('all');
+  loadStreamConfig();
+});
+</script>
+</body>
+</html>
