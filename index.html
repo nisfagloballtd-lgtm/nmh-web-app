@@ -3,8 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="NISFA Media House — Nigeria's dedicated agribusiness, trade and market intelligence media platform.">
-<meta name="theme-color" content="#8C1515">
+<meta name="description" content="NISFA Media House — Nigerias agribusiness and trade media platform.">
+<meta name="theme-color" content="#1B7A3E">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="NMH">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="theme-color" content="#1B7A3E">
 <title>NMH — NISFA Media House</title>
 
 <!-- ── FONTS ── -->
@@ -21,24 +28,25 @@
    DESIGN TOKENS
 ═══════════════════════════════════════════════════ */
 :root {
-  --red:       #8C1515;
-  --red-deep:  #5E0E0E;
-  --red-glow:  rgba(140,21,21,0.35);
-  --gold:      #C9A84C;
-  --gold-dim:  rgba(201,168,76,0.15);
-  --gold-pale: #E8D5A3;
-  --ink:       #0B0B0B;
-  --ink-2:     #141414;
-  --ink-3:     #1C1C1C;
-  --ink-4:     #252525;
-  --ink-5:     #2E2E2E;
-  --ash:       #3E3E3E;
-  --silver:    #888;
-  --mist:      #C8C4BC;
-  --cream:     #F0EBE2;
+  /* ── GREEN & WHITE THEME ── */
+  --red:       #1B7A3E;
+  --red-deep:  #145C2E;
+  --red-glow:  rgba(27,122,62,0.35);
+  --gold:      #1B7A3E;
+  --gold-dim:  rgba(27,122,62,0.12);
+  --gold-pale: #A8E6C0;
+  --ink:       #F5FAF6;
+  --ink-2:     #FFFFFF;
+  --ink-3:     #F0F7F2;
+  --ink-4:     #D8EDE0;
+  --ink-5:     #C2DFCc;
+  --ash:       #9DC4A8;
+  --silver:    #5A8A6A;
+  --mist:      #2D5A3D;
+  --cream:     #E8F5EC;
   --white:     #FFFFFF;
-  --green:     #2ECC71;
-  --green-dim: rgba(46,204,113,0.15);
+  --green:     #1B7A3E;
+  --green-dim: rgba(27,122,62,0.12);
   --r: 4px;
   --nav-h: 60px;
 }
@@ -50,25 +58,25 @@ body {
   line-height:1.6; overflow-x:hidden;
 }
 ::-webkit-scrollbar{width:5px}
-::-webkit-scrollbar-track{background:var(--ink-2)}
+::-webkit-scrollbar-track{background:#E8F5EC}
 ::-webkit-scrollbar-thumb{background:var(--red);border-radius:3px}
 
 /* ── TICKER ── */
-.ticker-bar{background:var(--red-deep);border-bottom:1px solid rgba(255,255,255,0.06);height:32px;overflow:hidden;display:flex;align-items:center;}
-.ticker-label{background:var(--red);height:100%;padding:0 14px;display:flex;align-items:center;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--white);white-space:nowrap;flex-shrink:0;}
+.ticker-bar{background:#145C2E;border-bottom:2px solid #0E3D1E;height:36px;overflow:hidden;display:flex;align-items:center;}
+.ticker-label{background:#0E3D1E;height:100%;padding:0 16px;display:flex;align-items:center;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#FFFFFF;white-space:nowrap;flex-shrink:0;}
 .ticker-track{overflow:hidden;flex:1;}
 .ticker-inner{display:inline-flex;animation:tickerScroll 45s linear infinite;white-space:nowrap;}
-.ticker-inner span{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:1.5px;padding:0 24px;color:rgba(255,255,255,0.7);}
-.ticker-inner span.up{color:var(--green);}
-.ticker-inner span.dn{color:#ef5350;}
-.ticker-inner span.sep{color:var(--ash);padding:0 4px;}
+.ticker-inner span{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1.5px;padding:0 24px;color:#FFFFFF;}
+.ticker-inner span.up{color:#7DFFA8;font-weight:800;}
+.ticker-inner span.dn{color:#FFB3B3;font-weight:800;}
+.ticker-inner span.sep{color:rgba(255,255,255,0.4);padding:0 4px;}
 @keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
 /* ── NAV ── */
-nav{position:sticky;top:0;z-index:100;height:var(--nav-h);background:rgba(11,11,11,0.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--ink-4);display:flex;align-items:center;justify-content:space-between;padding:0 28px;gap:16px;}
+nav{position:sticky;top:0;z-index:100;height:var(--nav-h);background:rgba(255,255,255,0.98);backdrop-filter:blur(14px);border-bottom:1px solid var(--ink-4);box-shadow:0 2px 12px rgba(27,122,62,0.08);display:flex;align-items:center;justify-content:space-between;padding:0 28px;gap:16px;}
 .nav-logo{display:flex;align-items:center;gap:11px;text-decoration:none;flex-shrink:0;cursor:pointer;}
 .nav-badge{width:34px;height:34px;background:var(--red);border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.nav-logo-text .t1{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:14px;letter-spacing:4px;color:var(--white);line-height:1;}
+.nav-logo-text .t1{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:14px;letter-spacing:4px;color:#1B7A3E;line-height:1;}
 .nav-logo-text .t2{font-size:8px;letter-spacing:2px;color:var(--silver);text-transform:uppercase;}
 .nav-links{display:flex;align-items:center;gap:2px;list-style:none;}
 .nav-links button{background:none;border:none;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--silver);padding:6px 13px;border-radius:var(--r);transition:color .2s,background .2s;}
@@ -90,21 +98,21 @@ nav{position:sticky;top:0;z-index:100;height:var(--nav-h);background:rgba(11,11,
 .page-section.active{display:block;}
 
 /* ── HERO ── */
-.hero{position:relative;min-height:460px;display:flex;align-items:flex-end;overflow:hidden;background:var(--ink-2);}
-.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 80% at 60% 50%,rgba(140,21,21,0.18),transparent 70%),linear-gradient(180deg,transparent 40%,rgba(11,11,11,0.96) 100%);z-index:1;}
-.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:48px 48px;}
+.hero{position:relative;min-height:460px;display:flex;align-items:flex-end;overflow:hidden;background:linear-gradient(135deg,#145C2E 0%,#1B7A3E 50%,#27AE60 100%);}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 80% at 60% 50%,rgba(255,255,255,0.08),transparent 70%),linear-gradient(180deg,transparent 30%,rgba(20,92,46,0.95) 100%);z-index:1;}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.06) 1px,transparent 1px);background-size:48px 48px;}
 .hero-content{position:relative;z-index:2;padding:56px 44px 44px;max-width:720px;}
-.hero-eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
-.hero-eyebrow::before{content:'';display:block;width:24px;height:1px;background:var(--gold);}
-.hero h1{font-family:'Playfair Display',serif;font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.1;color:var(--white);margin-bottom:14px;}
-.hero h1 em{font-style:italic;color:var(--gold);}
-.hero-sub{font-size:14px;color:var(--silver);max-width:480px;margin-bottom:28px;line-height:1.75;}
+.hero-eyebrow{display:none;}
+.hero-eyebrow::before{display:none;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.1;color:#FFFFFF;margin-bottom:14px;}
+.hero h1 em{font-style:italic;color:#A8E6C0;}
+.hero-sub{font-size:14px;color:rgba(255,255,255,0.9);max-width:480px;margin-bottom:28px;line-height:1.75;font-weight:400;}
 .hero-ctas{display:flex;gap:10px;flex-wrap:wrap;}
 .hero-stats{position:absolute;right:0;top:0;bottom:0;width:240px;z-index:2;background:rgba(18,18,18,0.75);backdrop-filter:blur(10px);border-left:1px solid var(--ink-4);padding:28px 20px;display:flex;flex-direction:column;gap:16px;overflow-y:auto;}
 .stat-item{border-bottom:1px solid var(--ink-4);padding-bottom:14px;}
 .stat-item:last-child{border-bottom:none;padding-bottom:0;}
-.stat-label{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--silver);margin-bottom:3px;}
-.stat-commodity{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--white);margin-bottom:2px;}
+.stat-label{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.7);margin-bottom:3px;}
+.stat-commodity{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:#FFFFFF;margin-bottom:2px;}
 .stat-change{font-size:11px;font-weight:600;}
 .stat-change.up{color:var(--green);}
 .stat-change.dn{color:#ef5350;}
@@ -119,9 +127,9 @@ nav{position:sticky;top:0;z-index:100;height:var(--nav-h);background:rgba(11,11,
 .wrap{max-width:1120px;margin:0 auto;padding:0 28px;}
 .sec-head{display:flex;align-items:center;justify-content:space-between;padding:48px 0 24px;gap:16px;flex-wrap:wrap;}
 .sec-head-left{display:flex;flex-direction:column;gap:3px;}
-.sec-eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--red);display:flex;align-items:center;gap:8px;}
-.sec-eyebrow::before{content:'';width:18px;height:1px;background:var(--red);}
-.sec-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--white);}
+.sec-eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#1B7A3E;display:flex;align-items:center;gap:8px;}
+.sec-eyebrow::before{content:'';width:18px;height:1px;background:#1B7A3E;}
+.sec-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:#1B3A26;}
 .sec-action{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);background:var(--gold-dim);border:1px solid rgba(201,168,76,0.3);padding:8px 16px;border-radius:var(--r);cursor:pointer;transition:background .2s;}
 .sec-action:hover{background:rgba(201,168,76,0.25);}
 
@@ -210,15 +218,15 @@ nav{position:sticky;top:0;z-index:100;height:var(--nav-h);background:rgba(11,11,
 .pc-tag{background:rgba(255,255,255,0.04);border:1px solid var(--ink-5);border-radius:2px;padding:2px 7px;font-size:9px;color:var(--mist);}
 
 /* ── ABOUT ── */
-.about-hero{background:linear-gradient(135deg,var(--red-deep),var(--ink-2));border:1px solid rgba(140,21,21,0.3);border-radius:var(--r);padding:44px;margin-bottom:24px;position:relative;overflow:hidden;}
+.about-hero{background:linear-gradient(135deg,#145C2E,#1B7A3E);border:1px solid rgba(27,122,62,0.3);border-radius:var(--r);padding:44px;margin-bottom:24px;position:relative;overflow:hidden;}
 .about-hero::before{content:'NMH';position:absolute;right:-12px;top:50%;transform:translateY(-50%);font-family:'Barlow Condensed',sans-serif;font-size:160px;font-weight:900;color:rgba(255,255,255,0.03);pointer-events:none;letter-spacing:-5px;}
 .ah-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
 .ah-title{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--white);margin-bottom:12px;line-height:1.3;}
 .ah-body{font-size:13px;color:var(--mist);max-width:640px;line-height:1.8;}
 .pillars-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:11px;margin-bottom:44px;}
 .pillar{background:var(--ink-3);border:1px solid var(--ink-4);border-radius:var(--r);padding:22px 18px;transition:border-color .2s,transform .2s;}
-.pillar:hover{border-color:var(--red);transform:translateY(-2px);}
-.p-num{font-family:'Barlow Condensed',sans-serif;font-size:34px;font-weight:900;color:var(--red);line-height:1;margin-bottom:7px;}
+.pillar:hover{border-color:#1B7A3E;transform:translateY(-2px);}
+.p-num{font-family:'Barlow Condensed',sans-serif;font-size:34px;font-weight:900;color:#1B7A3E;line-height:1;margin-bottom:7px;}
 .p-name{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--white);}
 .p-desc{font-size:11px;color:var(--silver);margin-top:5px;line-height:1.5;}
 .team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;margin-bottom:52px;}
@@ -253,7 +261,7 @@ nav{position:sticky;top:0;z-index:100;height:var(--nav-h);background:rgba(11,11,
 
 /* ── ADMIN PANEL ── */
 .admin-layout{display:grid;grid-template-columns:190px 1fr;min-height:calc(100vh - var(--nav-h) - 32px);}
-.admin-sidebar{background:var(--ink-2);border-right:1px solid var(--ink-4);padding:20px 0;}
+.admin-sidebar{background:#F0F7F2;border-right:1px solid var(--ink-4);padding:20px 0;}
 .admin-sidebar-title{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--silver);padding:0 18px 10px;}
 .admin-nav-item{display:flex;align-items:center;gap:9px;padding:10px 18px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;letter-spacing:1px;color:var(--silver);cursor:pointer;transition:background .15s,color .15s;border-left:2px solid transparent;}
 .admin-nav-item:hover{background:var(--ink-3);color:var(--white);}
@@ -261,13 +269,13 @@ nav{position:sticky;top:0;z-index:100;height:var(--nav-h);background:rgba(11,11,
 .admin-body{padding:28px;}
 .admin-panel{display:none;}
 .admin-panel.active{display:block;}
-.admin-panel-title{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--white);margin-bottom:22px;}
+.admin-panel-title{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:#1B3A26;margin-bottom:22px;}
 
 /* stats row */
 .stats-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-bottom:28px;}
 .stat-box{background:var(--ink-3);border:1px solid var(--ink-4);border-radius:var(--r);padding:16px 18px;}
 .sb-label{font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--silver);margin-bottom:5px;}
-.sb-val{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:800;color:var(--white);}
+.sb-val{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:800;color:#1B3A26;}
 .sb-sub{font-size:10px;color:var(--silver);margin-top:2px;}
 
 /* table */
@@ -288,18 +296,18 @@ nav{position:sticky;top:0;z-index:100;height:var(--nav-h);background:rgba(11,11,
 .lock-sub{font-size:13px;color:var(--silver);max-width:320px;}
 
 /* ── FOOTER ── */
-footer{background:var(--ink-2);border-top:1px solid var(--ink-4);margin-top:72px;}
-.footer-top{max-width:1120px;margin:0 auto;padding:48px 28px 36px;display:grid;grid-template-columns:220px 1fr 1fr 1fr;gap:36px;}
-.fb-name{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;letter-spacing:4px;color:var(--white);margin-bottom:3px;}
+footer{background:#1B7A3E;border-top:1px solid #145C2E;margin-top:72px;}
+.footer-top{max-width:1120px;margin:0 auto;padding:48px 28px 36px;display:grid;grid-template-columns:220px 1fr 1fr 1fr;gap:36px;color:#fff;}
+.fb-name{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;letter-spacing:4px;color:#fff;margin-bottom:3px;}
 .fb-sub{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--silver);margin-bottom:14px;}
-.ft-brand p{font-size:12px;color:var(--silver);line-height:1.7;}
-.ft-col-title{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+.ft-brand p{font-size:12px;color:rgba(255,255,255,0.75);line-height:1.7;}
+.ft-col-title{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#A8E6C0;margin-bottom:14px;}
 .ft-col ul{list-style:none;display:flex;flex-direction:column;gap:7px;}
-.ft-col ul li a{text-decoration:none;font-size:12px;color:var(--silver);transition:color .15s;cursor:pointer;}
+.ft-col ul li a{text-decoration:none;font-size:12px;color:rgba(255,255,255,0.75);transition:color .15s;cursor:pointer;}
 .ft-col ul li a:hover{color:var(--white);}
-.footer-bottom{border-top:1px solid var(--ink-4);max-width:1120px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
-.fb-copy{font-size:10px;color:var(--silver);}
-.fb-tag{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:3px;color:var(--red-deep);}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.15);max-width:1120px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.fb-copy{font-size:10px;color:rgba(255,255,255,0.7);}
+.fb-tag{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:3px;color:#A8E6C0;}
 
 /* ── TOAST ── */
 .toast{position:fixed;bottom:22px;right:22px;z-index:600;background:var(--ink-3);border:1px solid var(--ink-5);border-left:3px solid var(--green);border-radius:var(--r);padding:13px 18px;font-size:12px;color:var(--white);max-width:300px;transform:translateY(70px);opacity:0;transition:transform .3s,opacity .3s;pointer-events:none;}
@@ -427,7 +435,7 @@ footer{background:var(--ink-2);border-top:1px solid var(--ink-4);margin-top:72px
     <div class="hero-grid"></div>
     <div class="hero-bg"></div>
     <div class="hero-content reveal">
-      <div class="hero-eyebrow">Nigeria's Agribusiness &amp; Trade Media Platform</div>
+      
       <h1>Market Intelligence.<br><em>On Air. On Time.</em></h1>
       <p class="hero-sub">Daily commodity prices, live programme streaming, agribusiness insights and trade intelligence — powered by NISFA Media House.</p>
       <div class="hero-ctas">
@@ -672,22 +680,69 @@ footer{background:var(--ink-2);border-top:1px solid var(--ink-4);margin-top:72px
         <!-- Post Prices -->
         <div class="admin-panel" id="ap-post-prices">
           <div class="admin-panel-title">Post Price Update</div>
-          <div class="form-panel" style="margin-bottom:0;">
-            <div class="panel-title">New Commodity Price Entry</div>
-            <div class="form-grid">
-              <div class="form-group"><label class="form-label">Commodity</label>
-                <select class="form-select" id="aCommodity"><option>Sesame</option><option>Soybeans</option><option>Maize</option><option>Hibiscus</option><option>Ginger</option><option>Groundnut</option><option>Cashew</option><option>Cocoa</option><option>RCN</option></select></div>
-              <div class="form-group"><label class="form-label">Price (₦)</label><input class="form-input" type="number" id="aPrice" placeholder="2850"></div>
-              <div class="form-group"><label class="form-label">Unit</label><select class="form-select" id="aUnit"><option>per kg</option><option>per MT</option><option>per bag</option></select></div>
-              <div class="form-group"><label class="form-label">Change %</label><input class="form-input" id="aChange" placeholder="+6.05 or -3.2"></div>
-              <div class="form-group"><label class="form-label">Market</label><input class="form-input" id="aMarket" placeholder="Kano, Lagos…"></div>
-              <div class="form-group"><label class="form-label">Date</label><input class="form-input" type="date" id="aDate"></div>
+
+          <!-- Commodity Manager -->
+          <div class="form-panel" style="margin-bottom:16px;border-left-color:#1B7A3E;">
+            <div class="panel-title" style="color:#1B7A3E;">📦 Manage Commodities</div>
+            <div style="font-size:12px;color:var(--silver);margin-bottom:12px;">Add any commodity to the system — it will appear in all dropdowns immediately.</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;">
+              <div class="form-group" style="flex:1;min-width:160px;">
+                <label class="form-label">New Commodity Name</label>
+                <input class="form-input" id="newCommodityName" placeholder="e.g. Palm Oil, Pepper, Beans">
+              </div>
+              <div class="form-group" style="min-width:120px;">
+                <label class="form-label">Default Unit</label>
+                <select class="form-select" id="newCommodityUnit">
+                  <option>per kg</option><option>per MT</option><option>per bag</option>
+                  <option>per crate</option><option>per litre</option><option>per tuber</option>
+                </select>
+              </div>
+              <button class="btn-post" style="height:38px;padding:0 20px;" onclick="addCommodity()">+ Add</button>
             </div>
-            <div class="form-group" style="margin-bottom:13px;"><label class="form-label">Market Commentary</label>
-              <textarea class="form-input form-textarea" id="aNote" rows="3" placeholder="Optional notes…"></textarea></div>
+            <div id="commodityList" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;"></div>
+          </div>
+
+          <!-- Price Entry Form -->
+          <div class="form-panel" style="margin-bottom:0;">
+            <div class="panel-title">📊 New Price Entry</div>
+            <div class="form-grid" style="grid-template-columns:repeat(auto-fill,minmax(155px,1fr));">
+              <div class="form-group"><label class="form-label">Commodity</label>
+                <select class="form-select" id="aCommodity">
+                  <option>Sesame</option><option>Soybeans</option><option>Maize</option>
+                  <option>Hibiscus</option><option>Ginger</option><option>Groundnut</option>
+                  <option>Cashew</option><option>Cocoa</option><option>RCN</option>
+                </select>
+              </div>
+              <div class="form-group"><label class="form-label">Current Price (₦)</label>
+                <input class="form-input" type="number" id="aPrice" placeholder="2850"></div>
+              <div class="form-group"><label class="form-label">Highest Price (₦)</label>
+                <input class="form-input" type="number" id="aPriceHigh" placeholder="3100"></div>
+              <div class="form-group"><label class="form-label">Lowest Price (₦)</label>
+                <input class="form-input" type="number" id="aPriceLow" placeholder="2600"></div>
+              <div class="form-group"><label class="form-label">Unit</label>
+                <select class="form-select" id="aUnit">
+                  <option>per kg</option><option>per MT</option><option>per bag</option>
+                  <option>per crate</option><option>per litre</option><option>per tuber</option>
+                </select>
+              </div>
+              <div class="form-group"><label class="form-label">Change %</label>
+                <input class="form-input" id="aChange" placeholder="+6.05 or -3.2"></div>
+              <div class="form-group"><label class="form-label">Market / Location</label>
+                <input class="form-input" id="aMarket" placeholder="Kano, Lagos…"></div>
+              <div class="form-group"><label class="form-label">State</label>
+                <input class="form-input" id="aState" placeholder="e.g. Kano"></div>
+              <div class="form-group"><label class="form-label">Date</label>
+                <input class="form-input" type="date" id="aDate"></div>
+              <div class="form-group"><label class="form-label">Index / Exchange</label>
+                <input class="form-input" id="aIndex" placeholder="e.g. AFEX, NCAM, Spot"></div>
+            </div>
+            <div class="form-group" style="margin-bottom:13px;">
+              <label class="form-label">Market Commentary</label>
+              <textarea class="form-input form-textarea" id="aNote" rows="3" placeholder="e.g. Price rose due to high export demand from China…"></textarea>
+            </div>
             <div class="form-actions">
               <button class="btn-post" onclick="adminPostPrice()">Publish to Live Board</button>
-              <button class="btn-cancel-sm" onclick="showToast('Draft saved locally')">Save Draft</button>
+              <button class="btn-cancel-sm" onclick="showToast('Draft saved')">Save Draft</button>
             </div>
           </div>
         </div>
@@ -1023,11 +1078,16 @@ function renderPriceGrid(data) {
   document.getElementById('priceGrid').innerHTML = data.map(p => {
     const dir = p.dir || (p.change && p.change.startsWith('+') ? 'up' : 'down');
     const priceStr = typeof p.price === 'number' ? '₦' + p.price.toLocaleString() : p.price;
+    const highStr  = p.priceHigh ? '₦' + Number(p.priceHigh).toLocaleString() : '—';
+    const lowStr   = p.priceLow  ? '₦' + Number(p.priceLow).toLocaleString()  : '—';
+    const indexStr = p.index ? `<div style="font-size:9px;color:var(--silver);margin-top:3px;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;">INDEX: ${p.index}</div>` : '';
+    const hlStr = (p.priceHigh || p.priceLow) ? `<div style="display:flex;gap:6px;margin-top:6px;padding-top:6px;border-top:1px solid var(--ink-4);"><span style="font-size:10px;color:#27AE60;">▲ H: ${highStr}</span><span style="font-size:10px;color:#ef5350;">▼ L: ${lowStr}</span></div>` : '';
     return `<div class="price-card ${dir}">
       <div class="pc-commodity">${p.commodity}</div>
       <div class="pc-price">${priceStr}</div>
-      <div class="pc-unit">${p.unit || 'per kg'}${p.market ? ' · ' + p.market : ''}</div>
+      <div class="pc-unit">${p.unit || 'per kg'}${p.market ? ' · ' + p.market : ''}${p.state ? ', ' + p.state : ''}</div>
       <div class="pc-change ${dir}">${dir==='up'?'▲':dir==='down'?'▼':'—'} ${p.change || '0.00%'}</div>
+      ${hlStr}${indexStr}
       <div class="pc-bg">${p.commodity.substring(0,3).toUpperCase()}</div>
     </div>`;
   }).join('');
@@ -1080,19 +1140,92 @@ function postPrice() {
 }
 
 function adminPostPrice() {
-  const commodity = document.getElementById('aCommodity').value;
-  const price     = parseFloat(document.getElementById('aPrice').value);
-  const unit      = document.getElementById('aUnit').value;
-  const change    = document.getElementById('aChange').value.trim();
-  const market    = document.getElementById('aMarket').value.trim();
-  const note      = document.getElementById('aNote').value.trim();
-  if (!price) { showToast('⚠️ Please enter a price', true); return; }
+  const commodity  = document.getElementById('aCommodity').value;
+  const price      = parseFloat(document.getElementById('aPrice').value);
+  const priceHigh  = parseFloat(document.getElementById('aPriceHigh').value) || null;
+  const priceLow   = parseFloat(document.getElementById('aPriceLow').value)  || null;
+  const unit       = document.getElementById('aUnit').value;
+  const change     = document.getElementById('aChange').value.trim();
+  const market     = document.getElementById('aMarket').value.trim();
+  const state      = document.getElementById('aState').value.trim();
+  const index      = document.getElementById('aIndex').value.trim();
+  const note       = document.getElementById('aNote').value.trim();
+  if (!price) { showToast('⚠️ Please enter a current price', true); return; }
   const dir = change.startsWith('-') ? 'down' : 'up';
-  const entry = { commodity, price, unit, change, dir, market, note, timestamp: DEMO_MODE ? Date.now() : firebase.firestore.FieldValue.serverTimestamp(), postedBy: currentUser?.email || 'admin' };
+  const entry = { commodity, price, priceHigh, priceLow, unit, change, dir, market, state, index, note,
+    timestamp: DEMO_MODE ? Date.now() : firebase.firestore.FieldValue.serverTimestamp(),
+    postedBy: currentUser?.email || 'admin' };
   if (DEMO_MODE) { defaultPrices.unshift(entry); renderPriceGrid(defaultPrices); showToast('✅ ' + commodity + ' price published! (Demo)'); return; }
   db.collection('prices').add(entry)
-    .then(() => showToast('✅ ' + commodity + ' price published!'))
+    .then(() => showToast('✅ ' + commodity + ' price published to live board!'))
     .catch(err => showToast('Error: ' + err.message, true));
+}
+
+// ── COMMODITY MANAGER ──
+let customCommodities = JSON.parse(localStorage.getItem('nmh_commodities') || '[]');
+const defaultCommodities = ['Sesame','Soybeans','Maize','Hibiscus','Ginger','Groundnut','Cashew','Cocoa','RCN'];
+
+function getAllCommodities() {
+  return [...new Set([...defaultCommodities, ...customCommodities])].sort();
+}
+
+function addCommodity() {
+  const name = document.getElementById('newCommodityName').value.trim();
+  if (!name) { showToast('⚠️ Enter a commodity name', true); return; }
+  if (getAllCommodities().map(c=>c.toLowerCase()).includes(name.toLowerCase())) {
+    showToast('⚠️ ' + name + ' already exists'); return;
+  }
+  customCommodities.push(name);
+  try { localStorage.setItem('nmh_commodities', JSON.stringify(customCommodities)); } catch(e){}
+  if (!DEMO_MODE) {
+    db.collection('commodities').add({ name, addedBy: currentUser?.email, addedAt: firebase.firestore.FieldValue.serverTimestamp() });
+  }
+  document.getElementById('newCommodityName').value = '';
+  refreshCommoditySelects();
+  renderCommodityList();
+  showToast('✅ ' + name + ' added to commodity list!');
+}
+
+function removeCommodity(name) {
+  customCommodities = customCommodities.filter(c => c !== name);
+  try { localStorage.setItem('nmh_commodities', JSON.stringify(customCommodities)); } catch(e){}
+  refreshCommoditySelects();
+  renderCommodityList();
+  showToast(name + ' removed');
+}
+
+function refreshCommoditySelects() {
+  const all = getAllCommodities();
+  const opts = all.map(c => `<option>${c}</option>`).join('');
+  ['aCommodity','pCommodity'].forEach(id => {
+    const sel = document.getElementById(id);
+    if (sel) { const prev = sel.value; sel.innerHTML = opts; sel.value = prev; }
+  });
+}
+
+function renderCommodityList() {
+  const el = document.getElementById('commodityList');
+  if (!el) return;
+  const all = getAllCommodities();
+  el.innerHTML = all.map(c => {
+    const isCustom = customCommodities.includes(c);
+    return `<span style="display:inline-flex;align-items:center;gap:4px;background:${isCustom?'rgba(27,122,62,0.12)':'rgba(0,0,0,0.05)'};border:1px solid ${isCustom?'rgba(27,122,62,0.3)':'#ddd'};border-radius:3px;padding:3px 8px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;color:#1B3A26;">
+      ${c}${isCustom?`<span onclick="removeCommodity('${c}')" style="cursor:pointer;color:#ef5350;margin-left:2px;font-size:12px;">✕</span>`:''}
+    </span>`;
+  }).join('');
+}
+
+// Load custom commodities from Firestore on init
+function loadCommodities() {
+  if (DEMO_MODE) { refreshCommoditySelects(); renderCommodityList(); return; }
+  db.collection('commodities').get().then(snap => {
+    snap.forEach(doc => {
+      const name = doc.data().name;
+      if (!customCommodities.includes(name)) customCommodities.push(name);
+    });
+    refreshCommoditySelects();
+    renderCommodityList();
+  }).catch(() => { refreshCommoditySelects(); renderCommodityList(); });
 }
 
 function togglePostPanel() {
@@ -1282,7 +1415,389 @@ document.addEventListener('DOMContentLoaded', () => {
   loadPrices();
   renderProgs('all');
   loadStreamConfig();
+  loadCommodities();
 });
 </script>
 </body>
 </html>
+<!-- NMH v2 UPGRADE — Markets, Team Management, PWA Install -->
+<script>
+// ══════════════════════════════════════════════
+//  PWA INSTALL PROMPT
+// ══════════════════════════════════════════════
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  // show install banner
+  const banner = document.getElementById('installBanner');
+  if (banner) banner.style.display = 'flex';
+});
+
+function installPWA() {
+  if (!deferredPrompt) {
+    showToast('To install: tap browser menu → "Add to Home Screen"');
+    return;
+  }
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(r => {
+    if (r.outcome === 'accepted') showToast('✅ NMH added to your home screen!');
+    deferredPrompt = null;
+    const banner = document.getElementById('installBanner');
+    if (banner) banner.style.display = 'none';
+  });
+}
+
+// Register service worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js')
+    .then(() => console.log('NMH SW registered'))
+    .catch(e => console.log('SW error:', e));
+}
+
+// ══════════════════════════════════════════════
+//  MARKETS SYSTEM
+// ══════════════════════════════════════════════
+// Market structure: { id, name, location, state, commodity, price, unit, change, dir, source, updatedAt }
+
+let allMarkets = [];
+let marketFilter = 'all';
+let marketSearch = '';
+
+function loadMarkets() {
+  if (DEMO_MODE) {
+    allMarkets = [
+      { id:'m1', name:'Kano Central Market', location:'Kano', state:'Kano', commodity:'Groundnut', price:1850, unit:'per kg', change:'-4.03%', dir:'down', source:'NMH Field Reporter', updatedAt: Date.now() },
+      { id:'m2', name:'Mile 12 Market', location:'Lagos', state:'Lagos', commodity:'Tomatoes', price:450, unit:'per kg', change:'+2.10%', dir:'up', source:'NMH Field Reporter', updatedAt: Date.now() },
+      { id:'m3', name:'Bodija Market', location:'Ibadan', state:'Oyo', commodity:'Yam', price:800, unit:'per tuber', change:'+1.50%', dir:'up', source:'NMH Field Reporter', updatedAt: Date.now() },
+      { id:'m4', name:'Sango Ota Market', location:'Sango Ota', state:'Ogun', commodity:'Cashew', price:5600, unit:'per kg', change:'+2.15%', dir:'up', source:'NMH Field Reporter', updatedAt: Date.now() },
+      { id:'m5', name:'Dawanau Market', location:'Kano', state:'Kano', commodity:'Sesame', price:2850, unit:'per kg', change:'+4.20%', dir:'up', source:'NMH Market Analyst', updatedAt: Date.now() },
+    ];
+    renderMarkets();
+    return;
+  }
+  db.collection('markets').orderBy('updatedAt','desc')
+    .onSnapshot(snap => {
+      allMarkets = [];
+      snap.forEach(doc => allMarkets.push({ id: doc.id, ...doc.data() }));
+      renderMarkets();
+    }, err => { console.error(err); });
+}
+
+function renderMarkets() {
+  const grid = document.getElementById('marketsGrid');
+  if (!grid) return;
+  let src = allMarkets;
+  if (marketFilter !== 'all') src = src.filter(m => m.state === marketFilter);
+  if (marketSearch) src = src.filter(m =>
+    m.name.toLowerCase().includes(marketSearch) ||
+    m.commodity.toLowerCase().includes(marketSearch) ||
+    m.location.toLowerCase().includes(marketSearch)
+  );
+  if (!src.length) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--silver);font-family:\'Barlow Condensed\',sans-serif;font-size:14px;letter-spacing:2px;">NO MARKETS FOUND</div>';
+    return;
+  }
+  grid.innerHTML = src.map(m => {
+    const ago = timeAgo(m.updatedAt);
+    return `<div class="price-card ${m.dir||'flat'}" style="cursor:default;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
+        <div class="pc-commodity">${m.commodity}</div>
+        <div style="font-size:9px;color:var(--silver);text-align:right;">${ago}</div>
+      </div>
+      <div class="pc-price">₦${Number(m.price).toLocaleString()}</div>
+      <div class="pc-unit">${m.unit}</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px;">
+        <div class="pc-change ${m.dir||'flat'}">${m.dir==='up'?'▲':m.dir==='down'?'▼':'—'} ${m.change||'0%'}</div>
+        <div style="font-size:9px;color:var(--silver);">${m.dir==='up'?'▲':m.dir==='down'?'▼':'—'} ${m.change||'0%'}</div>
+      </div>
+      <div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--ink-4);">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:var(--white);">${m.name}</div>
+        <div style="font-size:10px;color:var(--silver);">📍 ${m.location}, ${m.state}</div>
+        <div style="font-size:9px;color:var(--ash);margin-top:2px;">Source: ${m.source||'NMH'}</div>
+      </div>
+      <div class="pc-bg">${(m.commodity||'MKT').substring(0,3).toUpperCase()}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('marketCount').textContent = src.length + ' markets';
+}
+
+function timeAgo(ts) {
+  if (!ts) return 'just now';
+  const diff = Date.now() - (typeof ts === 'number' ? ts : ts.toMillis ? ts.toMillis() : Date.now());
+  const mins = Math.floor(diff / 60000);
+  if (mins < 1) return 'just now';
+  if (mins < 60) return mins + 'm ago';
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return hrs + 'h ago';
+  return Math.floor(hrs/24) + 'd ago';
+}
+
+function addMarket() {
+  const name      = document.getElementById('mName').value.trim();
+  const location  = document.getElementById('mLocation').value.trim();
+  const state     = document.getElementById('mState').value.trim();
+  const commodity = document.getElementById('mCommodity').value.trim();
+  const price     = parseFloat(document.getElementById('mPrice').value);
+  const unit      = document.getElementById('mUnit').value;
+  const change    = document.getElementById('mChange').value.trim();
+  const source    = document.getElementById('mSource').value.trim();
+  if (!name || !commodity || !price) { showToast('⚠️ Name, commodity and price are required', true); return; }
+  const dir = change.startsWith('-') ? 'down' : 'up';
+  const entry = { name, location, state, commodity, price, unit, change, dir, source: source||'NMH', updatedAt: DEMO_MODE ? Date.now() : firebase.firestore.FieldValue.serverTimestamp() };
+  if (DEMO_MODE) {
+    entry.id = 'm' + Date.now();
+    allMarkets.unshift(entry);
+    renderMarkets();
+    document.getElementById('addMarketPanel').style.display = 'none';
+    showToast('✅ ' + name + ' added! (Demo)');
+    return;
+  }
+  db.collection('markets').add(entry)
+    .then(() => { document.getElementById('addMarketPanel').style.display = 'none'; showToast('✅ ' + name + ' added to market board!'); })
+    .catch(err => showToast('Error: ' + err.message, true));
+}
+
+// auto-refresh markets every hour
+setInterval(() => { if (DEMO_MODE) { renderMarkets(); } }, 3600000);
+
+// ══════════════════════════════════════════════
+//  TEAM MANAGEMENT
+// ══════════════════════════════════════════════
+const TEAM_ROLES = {
+  'super_admin': { label:'Super Admin', color:'#ef5350', can: ['prices','markets','stream','programmes','team'] },
+  'admin':       { label:'Admin',       color:'#FF9800', can: ['prices','markets','stream','programmes'] },
+  'editor':      { label:'Editor',      color:'#2196F3', can: ['prices','markets'] },
+  'reporter':    { label:'Reporter',    color:'#4CAF50', can: ['markets'] },
+};
+
+function loadTeamPanel() {
+  const tbody = document.getElementById('teamTableBody');
+  if (!tbody) return;
+  if (DEMO_MODE) {
+    const members = [
+      { email:'nisfagloballtd@gmail.com', name:'Aminu Bala', role:'super_admin', status:'active' },
+      { email:'producer@nmh.com',         name:'Executive Producer', role:'admin',   status:'active' },
+      { email:'analyst@nmh.com',          name:'Market Analyst',    role:'editor',  status:'active' },
+      { email:'reporter@nmh.com',         name:'Field Reporter',    role:'reporter',status:'pending' },
+    ];
+    renderTeamTable(members);
+    return;
+  }
+  db.collection('team').get().then(snap => {
+    const members = [];
+    snap.forEach(doc => members.push({ id: doc.id, ...doc.data() }));
+    renderTeamTable(members);
+  });
+}
+
+function renderTeamTable(members) {
+  const tbody = document.getElementById('teamTableBody');
+  if (!tbody) return;
+  tbody.innerHTML = members.map(m => {
+    const role = TEAM_ROLES[m.role] || TEAM_ROLES['reporter'];
+    return `<tr>
+      <td><div style="font-weight:600;color:var(--white);">${m.name||m.email}</div><div style="font-size:10px;color:var(--silver);">${m.email}</div></td>
+      <td><span style="background:${role.color}22;color:${role.color};border:1px solid ${role.color}44;padding:2px 8px;border-radius:2px;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;">${role.label}</span></td>
+      <td style="font-size:11px;color:var(--silver);">${role.can.join(', ')}</td>
+      <td><span class="badge-sm ${m.status==='active'?'badge-live':'badge-sched'}">${m.status||'active'}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+function inviteTeamMember() {
+  const email = document.getElementById('inviteEmail').value.trim();
+  const role  = document.getElementById('inviteRole').value;
+  const name  = document.getElementById('inviteName').value.trim();
+  if (!email) { showToast('⚠️ Please enter an email address', true); return; }
+  if (DEMO_MODE) {
+    showToast('✅ Invite sent to ' + email + ' as ' + TEAM_ROLES[role].label + ' (Demo)');
+    return;
+  }
+  // Add to Firestore team collection
+  db.collection('team').add({ email, name: name||email, role, status:'pending', invitedBy: currentUser?.email, invitedAt: firebase.firestore.FieldValue.serverTimestamp() })
+    .then(() => {
+      showToast('✅ ' + email + ' invited as ' + TEAM_ROLES[role].label);
+      // Also create auth account in Firebase Console note
+      showToast('⚠️ Go to Firebase Console → Auth → Add user: ' + email);
+    })
+    .catch(err => showToast('Error: ' + err.message, true));
+}
+
+// ══════════════════════════════════════════════
+//  INJECT MARKETS PAGE INTO DOM
+// ══════════════════════════════════════════════
+function injectMarketsPage() {
+  if (document.getElementById('sec-markets')) return;
+  const sec = document.createElement('div');
+  sec.id = 'sec-markets';
+  sec.className = 'page-section';
+  sec.innerHTML = `
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-head-left">
+          <div class="sec-eyebrow">Market Intelligence</div>
+          <div class="sec-title">Nigeria Commodity Markets</div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+          <span id="marketCount" style="font-size:11px;color:var(--silver);font-family:'Barlow Condensed',sans-serif;letter-spacing:2px;"></span>
+          <button class="sec-action" id="addMarketBtn" onclick="requireAuth(()=>document.getElementById('addMarketPanel').style.display='block')" style="display:none;">+ Add Market</button>
+        </div>
+      </div>
+
+      <!-- Search & Filter -->
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;align-items:center;">
+        <input class="nav-search" type="text" placeholder="Search market, commodity, location…" style="width:100%;max-width:300px;font-size:13px;" oninput="marketSearch=this.value.toLowerCase();renderMarkets()">
+        <select class="form-select" style="font-size:12px;padding:7px 12px;max-width:180px;" onchange="marketFilter=this.value;renderMarkets()">
+          <option value="all">All States</option>
+          <option>Kano</option><option>Lagos</option><option>Oyo</option><option>Ogun</option>
+          <option>Rivers</option><option>Katsina</option><option>Kaduna</option><option>Sokoto</option>
+          <option>Borno</option><option>Anambra</option><option>Enugu</option><option>Delta</option>
+          <option>Cross River</option><option>Bauchi</option><option>Niger</option><option>FCT</option>
+        </select>
+        <button class="btn-ghost" style="font-size:10px;padding:6px 14px;" onclick="loadMarkets()">↻ Refresh</button>
+      </div>
+
+      <!-- Add Market Form -->
+      <div class="form-panel" id="addMarketPanel" style="display:none;margin-bottom:24px;">
+        <div class="panel-title">+ Add New Market</div>
+        <div class="form-grid">
+          <div class="form-group"><label class="form-label">Market Name</label><input class="form-input" id="mName" placeholder="e.g. Kano Central Market"></div>
+          <div class="form-group"><label class="form-label">City / LGA</label><input class="form-input" id="mLocation" placeholder="e.g. Kano"></div>
+          <div class="form-group"><label class="form-label">State</label><input class="form-input" id="mState" placeholder="e.g. Kano"></div>
+          <div class="form-group"><label class="form-label">Commodity</label><input class="form-input" id="mCommodity" placeholder="e.g. Groundnut"></div>
+          <div class="form-group"><label class="form-label">Price (₦)</label><input class="form-input" type="number" id="mPrice" placeholder="e.g. 1850"></div>
+          <div class="form-group"><label class="form-label">Unit</label><select class="form-select" id="mUnit"><option>per kg</option><option>per MT</option><option>per bag</option><option>per tuber</option><option>per crate</option><option>per litre</option></select></div>
+          <div class="form-group"><label class="form-label">Change %</label><input class="form-input" id="mChange" placeholder="+2.5 or -3.1"></div>
+          <div class="form-group"><label class="form-label">Source / Reporter</label><input class="form-input" id="mSource" placeholder="NMH Field Reporter"></div>
+        </div>
+        <div class="form-actions">
+          <button class="btn-post" onclick="addMarket()">Add to Market Board</button>
+          <button class="btn-cancel-sm" onclick="document.getElementById('addMarketPanel').style.display='none'">Cancel</button>
+        </div>
+      </div>
+
+      <div class="price-grid" id="marketsGrid" style="margin-bottom:44px;">
+        <div class="loading-row" style="grid-column:1/-1;"><div class="spinner"></div></div>
+      </div>
+    </div>`;
+  // Insert before footer
+  document.querySelector('footer').before(sec);
+}
+
+// ══════════════════════════════════════════════
+//  INJECT TEAM PANEL INTO ADMIN
+// ══════════════════════════════════════════════
+function injectTeamPanel() {
+  const existing = document.getElementById('ap-team');
+  if (!existing) return;
+  existing.innerHTML = `
+    <div class="admin-panel-title">Team Management</div>
+    <div style="background:var(--ink-3);border:1px solid var(--ink-4);border-left:3px solid var(--gold);border-radius:4px;padding:20px 24px;margin-bottom:20px;">
+      <div class="panel-title">Invite New Team Member</div>
+      <div class="form-grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr));">
+        <div class="form-group"><label class="form-label">Full Name</label><input class="form-input" id="inviteName" placeholder="e.g. Ibrahim Musa"></div>
+        <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" id="inviteEmail" placeholder="member@nmh.com"></div>
+        <div class="form-group"><label class="form-label">Role</label>
+          <select class="form-select" id="inviteRole">
+            <option value="admin">Admin — Prices, Markets, Stream</option>
+            <option value="editor">Editor — Prices & Markets</option>
+            <option value="reporter">Reporter — Markets only</option>
+          </select></div>
+      </div>
+      <div style="background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.2);border-radius:4px;padding:12px 14px;margin:12px 0;font-size:11px;color:var(--gold-pale);line-height:1.7;">
+        <strong style="font-family:'Barlow Condensed',sans-serif;letter-spacing:2px;font-size:10px;">IMPORTANT:</strong> After inviting, go to Firebase Console → Authentication → Add user with the same email and set their password. Share the password with them securely.
+      </div>
+      <div class="form-actions">
+        <button class="btn-post" onclick="inviteTeamMember()">Send Invite</button>
+      </div>
+    </div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--silver);margin-bottom:12px;">Current Team (4 members)</div>
+    <table class="data-table">
+      <thead><tr><th>Member</th><th>Role</th><th>Can Access</th><th>Status</th></tr></thead>
+      <tbody id="teamTableBody"><tr><td colspan="4"><div class="loading-row"><div class="spinner"></div></div></td></tr></tbody>
+    </table>`;
+  loadTeamPanel();
+}
+
+// ══════════════════════════════════════════════
+//  INJECT PWA INSTALL BANNER
+// ══════════════════════════════════════════════
+function injectInstallBanner() {
+  if (document.getElementById('installBanner')) return;
+  const banner = document.createElement('div');
+  banner.id = 'installBanner';
+  banner.style.cssText = 'display:none;position:fixed;bottom:70px;left:50%;transform:translateX(-50%);background:var(--ink-2);border:1px solid var(--ink-4);border-top:3px solid var(--gold);border-radius:4px;padding:14px 20px;z-index:500;align-items:center;gap:14px;box-shadow:0 8px 32px rgba(0,0,0,0.6);max-width:340px;width:90%;';
+  banner.innerHTML = `
+    <div style="display:flex;align-items:center;gap:10px;flex:1;">
+      <div style="width:36px;height:36px;background:var(--red);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <svg width="20" height="20" viewBox="0 0 160 160" fill="none"><rect x="20" y="15" width="32" height="130" fill="white"/><rect x="108" y="15" width="32" height="130" fill="white"/><polygon points="52,15 84,15 108,145 76,145" fill="white"/></svg>
+      </div>
+      <div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--white);">Install NMH App</div>
+        <div style="font-size:11px;color:var(--silver);">Add to your home screen</div>
+      </div>
+    </div>
+    <button onclick="installPWA()" style="background:var(--red);color:white;border:none;border-radius:3px;padding:8px 16px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer;white-space:nowrap;">Install</button>
+    <button onclick="this.parentElement.style.display='none'" style="background:none;border:none;color:var(--silver);cursor:pointer;font-size:16px;padding:0 4px;">✕</button>`;
+  document.body.appendChild(banner);
+}
+
+// ══════════════════════════════════════════════
+//  ADD MARKETS TO NAV
+// ══════════════════════════════════════════════
+function upgradeNav() {
+  // Add Markets button to nav
+  const navLinks = document.querySelector('.nav-links');
+  if (navLinks && !document.getElementById('nb-markets')) {
+    const li = document.createElement('li');
+    li.innerHTML = '<button onclick="showSection(\'markets\')" id="nb-markets">Markets</button>';
+    // Insert after prices button
+    const pricesLi = navLinks.querySelector('li:first-child');
+    pricesLi.after(li);
+  }
+  // Add Markets to mobile nav
+  const mobileNav = document.getElementById('mobileNav');
+  if (mobileNav && !document.getElementById('mob-markets')) {
+    const btn = document.createElement('button');
+    btn.id = 'mob-markets';
+    btn.innerHTML = '📈 Markets';
+    btn.onclick = () => { showSection('markets'); toggleMobileNav(); };
+    mobileNav.insertBefore(btn, mobileNav.children[1]);
+  }
+}
+
+// Patch showSection to handle markets
+const _origShowSection = showSection;
+window.showSection = function(id) {
+  if (id === 'markets') {
+    document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+    const sec = document.getElementById('sec-markets');
+    if (sec) { sec.classList.add('active'); loadMarkets(); }
+    const nb = document.getElementById('nb-markets');
+    if (nb) nb.classList.add('active');
+    window.scrollTo(0, 0);
+    return;
+  }
+  _origShowSection(id);
+};
+
+// Show add market button when logged in
+const _origAuthChanged = auth.onAuthStateChanged;
+auth.onAuthStateChanged(user => {
+  const addBtn = document.getElementById('addMarketBtn');
+  if (addBtn) addBtn.style.display = user ? 'inline-block' : 'none';
+});
+
+// ══════════════════════════════════════════════
+//  INIT UPGRADES
+// ══════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  injectMarketsPage();
+  injectInstallBanner();
+  upgradeNav();
+  setTimeout(injectTeamPanel, 500);
+  loadMarkets();
+});
+</script>
