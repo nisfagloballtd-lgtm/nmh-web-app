@@ -245,21 +245,21 @@ nav{position:sticky;top:0;z-index:100;height:var(--nav-h);background:rgba(255,25
 .tc-role{font-size:10px;color:var(--silver);margin-top:3px;line-height:1.4;}
 
 /* ── AUTH / LOGIN ── */
-.auth-overlay{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,0.88);display:none;align-items:center;justify-content:center;padding:20px;}
+.auth-overlay{position:fixed;inset:0;z-index:300;background:rgba(10,40,20,0.85);display:none;align-items:center;justify-content:center;padding:20px;}
 .auth-overlay.open{display:flex;}
-.auth-box{background:var(--ink-2);border:1px solid var(--ink-4);border-radius:var(--r);width:100%;max-width:400px;padding:36px;position:relative;}
-.auth-close{position:absolute;top:14px;right:14px;background:none;border:none;cursor:pointer;color:var(--silver);font-size:18px;}
-.auth-close:hover{color:var(--white);}
+.auth-box{background:#FFFFFF;border:2px solid #C2DFCC;border-top:4px solid #1B7A3E;border-radius:6px;width:100%;max-width:400px;padding:36px;position:relative;box-shadow:0 8px 40px rgba(0,0,0,0.15);}
+.auth-close{position:absolute;top:14px;right:14px;background:none;border:none;cursor:pointer;color:#5A8A6A;font-size:18px;font-weight:700;}
+.auth-close:hover{color:#0d2b15;}
 .auth-logo{display:flex;align-items:center;gap:10px;margin-bottom:24px;}
 .auth-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--white);margin-bottom:4px;}
-.auth-sub{font-size:12px;color:var(--silver);margin-bottom:22px;}
-.auth-error{background:rgba(239,83,80,0.12);border:1px solid rgba(239,83,80,0.3);border-radius:var(--r);padding:10px 14px;font-size:12px;color:#ef9a9a;margin-bottom:14px;display:none;}
+.auth-sub{font-size:12px;color:#5A8A6A;margin-bottom:22px;}
+.auth-error{background:#FFF5F5;border:1px solid #FFCDD2;border-radius:var(--r);padding:10px 14px;font-size:12px;color:#C62828;font-weight:600;margin-bottom:14px;display:none;}
 .auth-error.show{display:block;}
 .auth-form{display:flex;flex-direction:column;gap:14px;}
 .auth-actions{display:flex;gap:8px;margin-top:4px;flex-wrap:wrap;}
 .btn-signin{background:var(--red);color:var(--white);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:11px 24px;border-radius:var(--r);border:none;cursor:pointer;width:100%;transition:background .2s;}
 .btn-signin:hover{background:#a01a1a;}
-.auth-switch{font-size:12px;color:var(--silver);text-align:center;margin-top:12px;}
+.auth-switch{font-size:12px;color:#5A8A6A;text-align:center;margin-top:12px;}
 .auth-switch span{color:var(--gold);cursor:pointer;text-decoration:underline;}
 .auth-user-bar{display:none;align-items:center;gap:8px;}
 .auth-user-bar.show{display:flex;}
@@ -408,17 +408,40 @@ footer{background:#1B7A3E;border-top:1px solid #145C2E;margin-top:72px;}
 <!-- ══ NAV ══ -->
 <nav>
   <div class="nav-logo" onclick="showSection('home')">
-    <img src="https://i.imgur.com/placeholder.png" id="navLogoImg"
+    <img src="nisfa-logo.png" id="navLogoImg"
          onerror="this.style.display='none';document.getElementById('navLogoFallback').style.display='flex';"
-         style="height:44px;width:auto;object-fit:contain;display:none;">
-    <div id="navLogoFallback" style="display:flex;align-items:center;gap:9px;">
-      <div class="nav-badge" style="background:transparent;padding:0;">
-        <img src="nisfa-logo.png" alt="NISFA" style="height:40px;width:auto;"
-             onerror="this.parentElement.innerHTML='<svg width='34' height='34' viewBox='0 0 160 160' fill='none'><rect x='20' y='15' width='32' height='130' fill='%231B7A3E'/><rect x='108' y='15' width='32' height='130' fill='%231B7A3E'/><polygon points='52,15 84,15 108,145 76,145' fill='%231B7A3E'/></svg>'">
-      </div>
-      <div class="nav-logo-text">
-        <div class="t1">NISFA</div>
-        <div class="t2">Media House</div>
+         style="height:44px;width:auto;object-fit:contain;">
+    <div id="navLogoFallback" style="display:flex;align-items:center;gap:10px;">
+      <!-- NISFA inline logo - always visible, no file needed -->
+      <svg width="52" height="32" viewBox="0 0 260 80" xmlns="http://www.w3.org/2000/svg">
+        <!-- N -->
+        <path d="M8 8 L8 68 L22 68 L22 32 L44 68 L58 68 L58 8 L44 8 L44 44 L22 8 Z" fill="#1B7A3E"/>
+        <!-- I -->
+        <rect x="66" y="8" width="14" height="60" fill="#1B7A3E"/>
+        <!-- S -->
+        <path d="M88 8 L88 20 L112 20 L112 36 L88 36 L88 68 L122 68 L122 56 L102 56 L102 48 L122 48 L122 8 Z" fill="#1B7A3E"/>
+        <!-- Wheat stem arc -->
+        <path d="M100 28 Q148 4 200 14" stroke="#C9A84C" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <!-- Wheat head grains -->
+        <ellipse cx="196" cy="10" rx="6" ry="10" fill="#C9A84C" transform="rotate(-20,196,10)"/>
+        <ellipse cx="206" cy="8" rx="5" ry="9" fill="#C9A84C" transform="rotate(-10,206,8)"/>
+        <ellipse cx="214" cy="10" rx="5" ry="9" fill="#C9A84C" transform="rotate(5,214,10)"/>
+        <ellipse cx="220" cy="15" rx="5" ry="8" fill="#C9A84C" transform="rotate(15,220,15)"/>
+        <ellipse cx="188" cy="14" rx="5" ry="9" fill="#C9A84C" transform="rotate(-30,188,14)"/>
+        <!-- F -->
+        <rect x="134" y="36" width="14" height="32" fill="#1B7A3E"/>
+        <rect x="134" y="36" width="28" height="12" fill="#1B7A3E"/>
+        <rect x="134" y="52" width="22" height="10" fill="#1B7A3E"/>
+        <!-- A -->
+        <path d="M170 68 L184 36 L198 68 L184 68 Z" fill="#1B7A3E"/>
+        <rect x="174" y="56" width="20" height="8" fill="#1B7A3E"/>
+        <!-- A inner white -->
+        <path d="M184 42 L178 60 L190 60 Z" fill="white"/>
+        <!-- TM -->
+        <text x="232" y="42" font-family="Arial" font-size="11" fill="#1B7A3E" font-weight="bold">TM</text>
+      </svg>
+      <div class="nav-logo-text" style="border-left:1px solid #C2DFCC;padding-left:10px;">
+        <div class="t2" style="font-size:9px;color:#5A8A6A;">Media House</div>
       </div>
     </div>
   </div>
@@ -469,21 +492,29 @@ footer{background:#1B7A3E;border-top:1px solid #145C2E;margin-top:72px;}
     <div class="hero-content reveal">
       <!-- NISFA Logo in hero -->
       <div class="hero-logo-block">
+        <!-- Try uploaded PNG first, fallback to inline SVG logo -->
         <img src="nisfa-logo.png" alt="NISFA Media House"
-             onerror="this.style.display='none';document.getElementById('heroLogoFallback').style.display='flex';"
-             style="height:72px;width:auto;filter:drop-shadow(0 2px 12px rgba(0,0,0,0.4));">
-        <div id="heroLogoFallback" style="display:none;align-items:center;gap:10px;">
-          <div style="width:56px;height:56px;background:#1B7A3E;border-radius:6px;display:flex;align-items:center;justify-content:center;">
-            <svg width="34" height="34" viewBox="0 0 160 160" fill="none">
-              <rect x="20" y="15" width="32" height="130" fill="white"/>
-              <rect x="108" y="15" width="32" height="130" fill="white"/>
-              <polygon points="52,15 84,15 108,145 76,145" fill="white"/>
-            </svg>
-          </div>
-          <div>
-            <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:28px;letter-spacing:4px;color:#fff;line-height:1;">NISFA</div>
-            <div style="font-size:10px;letter-spacing:3px;color:rgba(255,255,255,0.8);text-transform:uppercase;">Media House</div>
-          </div>
+             onerror="this.style.display='none';document.getElementById('heroLogoFallback').style.display='block';"
+             style="height:80px;width:auto;filter:drop-shadow(0 2px 16px rgba(0,0,0,0.5));">
+        <div id="heroLogoFallback" style="display:none;">
+          <svg width="220" height="60" viewBox="0 0 260 72" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 6 L8 62 L22 62 L22 28 L44 62 L58 62 L58 6 L44 6 L44 40 L22 6 Z" fill="white"/>
+            <rect x="66" y="6" width="13" height="56" fill="white"/>
+            <path d="M86 6 L86 18 L110 18 L110 34 L86 34 L86 62 L120 62 L120 50 L100 50 L100 44 L120 44 L120 6 Z" fill="white"/>
+            <path d="M98 26 Q146 2 198 12" stroke="#C9A84C" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+            <ellipse cx="194" cy="8" rx="6" ry="10" fill="#C9A84C" transform="rotate(-20,194,8)"/>
+            <ellipse cx="204" cy="6" rx="5" ry="9" fill="#C9A84C" transform="rotate(-10,204,6)"/>
+            <ellipse cx="212" cy="8" rx="5" ry="9" fill="#C9A84C" transform="rotate(5,212,8)"/>
+            <ellipse cx="218" cy="13" rx="5" ry="8" fill="#C9A84C" transform="rotate(15,218,13)"/>
+            <ellipse cx="186" cy="12" rx="5" ry="9" fill="#C9A84C" transform="rotate(-30,186,12)"/>
+            <rect x="132" y="34" width="13" height="28" fill="white"/>
+            <rect x="132" y="34" width="26" height="11" fill="white"/>
+            <rect x="132" y="48" width="20" height="9" fill="white"/>
+            <path d="M168 62 L182 34 L196 62 Z" fill="white"/>
+            <rect x="172" y="52" width="20" height="8" fill="white"/>
+            <path d="M182 40 L176 56 L188 56 Z" fill="#1B7A3E"/>
+            <text x="228" y="38" font-family="Arial" font-size="10" fill="white" font-weight="bold">TM</text>
+          </svg>
         </div>
         <div class="hero-tagline-badge">Nigeria's Agribusiness &amp; Trade Media Platform</div>
       </div>
@@ -937,7 +968,7 @@ footer{background:#1B7A3E;border-top:1px solid #145C2E;margin-top:72px;}
           <polygon points="52,15 84,15 108,145 76,145" fill="white"/>
         </svg>
       </div>
-      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:13px;letter-spacing:3px;color:var(--white);">NMH Admin</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:13px;letter-spacing:3px;color:#0d2b15;">NMH Admin</div>
     </div>
     <div class="auth-title" id="authTitle">Sign In</div>
     <div class="auth-sub" id="authSubtitle">Use your NMH team email and password.</div>
@@ -1089,7 +1120,7 @@ function submitAuth() {
     .then(() => { btn.textContent = authMode === 'signin' ? 'Sign In' : 'Create Account'; btn.disabled = false; })
     .catch(err => {
       btn.textContent = authMode === 'signin' ? 'Sign In' : 'Create Account'; btn.disabled = false;
-      const msgs = { 'auth/user-not-found':'No account found with this email.','auth/wrong-password':'Incorrect password.','auth/invalid-email':'Please enter a valid email address.','auth/email-already-in-use':'An account with this email already exists.','auth/weak-password':'Password must be at least 6 characters.' };
+      const msgs = { 'auth/user-not-found':'No account found with this email.','auth/wrong-password':'Incorrect password — please try again.','auth/invalid-email':'Please enter a valid email address.','auth/email-already-in-use':'An account with this email already exists.','auth/weak-password':'Password must be at least 6 characters.','auth/invalid-credential':'Wrong email or password. Please check and try again.','auth/too-many-requests':'Too many attempts. Please wait a few minutes and try again.','auth/network-request-failed':'Network error. Please check your internet connection.' };
       showAuthError(msgs[err.code] || err.message);
     });
 }
@@ -1112,8 +1143,8 @@ function simulateDemoLogin() {
   loadDashboardStats();
 }
 
-function showAuthError(msg) { const el=document.getElementById('authError'); el.textContent=msg; el.classList.add('show'); }
-function clearAuthError()   { document.getElementById('authError').classList.remove('show'); }
+function showAuthError(msg) { const el=document.getElementById('authError'); el.textContent='⚠️ '+msg; el.classList.add('show'); el.style.display='block'; }
+function clearAuthError()   { const el=document.getElementById('authError'); el.classList.remove('show'); el.style.display='none'; }
 
 // ══════════════════════════════════════════════
 //  FIRESTORE — PRICES
@@ -1568,7 +1599,21 @@ function loadMarkets() {
 
 function renderMarkets() {
   const grid = document.getElementById('marketsGrid');
-  if (!grid) return;
+  if (!grid) { injectMarketsPage(); return; }
+  // If no markets in Firestore yet, show demo data
+  if (!allMarkets || allMarkets.length === 0) {
+    allMarkets = [
+      { id:'m1', name:'Dawanau Market', location:'Kano', state:'Kano', commodity:'Sesame', price:2850, unit:'per kg', change:'+4.20%', dir:'up', source:'NMH', updatedAt: Date.now() },
+      { id:'m2', name:'Kano Central', location:'Kano', state:'Kano', commodity:'Groundnut', price:1850, unit:'per kg', change:'-4.03%', dir:'down', source:'NMH', updatedAt: Date.now() },
+      { id:'m3', name:'Mile 12', location:'Lagos', state:'Lagos', commodity:'Cocoa', price:12400, unit:'per kg', change:'+6.05%', dir:'up', source:'NMH', updatedAt: Date.now() },
+      { id:'m4', name:'Bodija Market', location:'Ibadan', state:'Oyo', commodity:'Maize', price:680, unit:'per kg', change:'+6.02%', dir:'up', source:'NMH', updatedAt: Date.now() },
+      { id:'m5', name:'Sango Ota', location:'Sango Ota', state:'Ogun', commodity:'Cashew', price:5600, unit:'per kg', change:'+2.15%', dir:'up', source:'NMH', updatedAt: Date.now() },
+      { id:'m6', name:'Maiduguri Central', location:'Maiduguri', state:'Borno', commodity:'Hibiscus', price:4200, unit:'per kg', change:'-5.09%', dir:'down', source:'NMH', updatedAt: Date.now() },
+      { id:'m7', name:'Kaduna Central', location:'Kaduna', state:'Kaduna', commodity:'Ginger', price:3100, unit:'per kg', change:'+0.25%', dir:'up', source:'NMH', updatedAt: Date.now() },
+      { id:'m8', name:'Onitsha Main', location:'Onitsha', state:'Anambra', commodity:'RCN', price:7200, unit:'per kg', change:'-9.54%', dir:'down', source:'NMH', updatedAt: Date.now() },
+      { id:'m9', name:'Port Harcourt Market', location:'Port Harcourt', state:'Rivers', commodity:'Soybeans', price:1420, unit:'per kg', change:'+1.06%', dir:'up', source:'NMH', updatedAt: Date.now() },
+    ];
+  }
   let src = allMarkets;
   if (marketFilter !== 'all') src = src.filter(m => m.state === marketFilter);
   if (marketSearch) src = src.filter(m =>
@@ -1875,11 +1920,14 @@ auth.onAuthStateChanged(user => {
 // ══════════════════════════════════════════════
 //  INIT UPGRADES
 // ══════════════════════════════════════════════
+// Run immediately when script loads
+injectMarketsPage();
+injectInstallBanner();
+
 document.addEventListener('DOMContentLoaded', () => {
-  injectMarketsPage();
-  injectInstallBanner();
   upgradeNav();
-  setTimeout(injectTeamPanel, 500);
-  loadMarkets();
+  setTimeout(injectTeamPanel, 600);
+  setTimeout(loadMarkets, 800);
+  // Also load markets when switching to markets tab
 });
 </script>
