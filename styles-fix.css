@@ -1,0 +1,58 @@
+/* NMH UI FIX */
+
+.ah-body,
+.pc-price,
+.pm-show,
+.sc-title,
+.pc-title,
+.p-name,
+.auth-title,
+.auth-logo div,
+.stat-box,
+.team-card,
+.price-card,
+.live-player,
+.upcoming-panel {
+    color: #1B3A26 !important;
+}
+
+.price-card,
+.team-card,
+.pillar,
+.live-player,
+.upcoming-panel,
+.form-panel,
+.stream-cta {
+    background: #FFFFFF !important;
+}
+
+.btn-ghost {
+    color: #1B3A26 !important;
+}
+
+.about-hero {
+    background: linear-gradient(135deg,#145C2E,#1B7A3E) !important;
+}
+
+.about-hero .ah-title,
+.about-hero .ah-body {
+    color: #FFFFFF !important;
+}
+
+.p-name,
+.pc-title,
+.pm-show,
+.sc-title,
+.auth-title {
+    color: #1B3A26 !important;
+}
+
+.pc-price {
+    color: #145C2E !important;
+    font-weight: 800;
+}
+
+.nav-links button.active {
+    background: #1B7A3E !important;
+    color: #FFFFFF !important;
+}
