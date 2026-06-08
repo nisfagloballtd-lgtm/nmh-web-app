@@ -412,41 +412,13 @@ footer{background:#1B7A3E;border-top:1px solid #145C2E;margin-top:72px;}
          onerror="this.style.display='none';document.getElementById('navLogoFallback').style.display='flex';"
          style="height:44px;width:auto;object-fit:contain;">
     <div id="navLogoFallback" style="display:flex;align-items:center;gap:10px;">
-      <!-- NISFA inline logo - always visible, no file needed -->
-      <svg width="52" height="32" viewBox="0 0 260 80" xmlns="http://www.w3.org/2000/svg">
-        <!-- N -->
-        <path d="M8 8 L8 68 L22 68 L22 32 L44 68 L58 68 L58 8 L44 8 L44 44 L22 8 Z" fill="#1B7A3E"/>
-        <!-- I -->
-        <rect x="66" y="8" width="14" height="60" fill="#1B7A3E"/>
-        <!-- S -->
-        <path d="M88 8 L88 20 L112 20 L112 36 L88 36 L88 68 L122 68 L122 56 L102 56 L102 48 L122 48 L122 8 Z" fill="#1B7A3E"/>
-        <!-- Wheat stem arc -->
-        <path d="M100 28 Q148 4 200 14" stroke="#C9A84C" stroke-width="3" fill="none" stroke-linecap="round"/>
-        <!-- Wheat head grains -->
-        <ellipse cx="196" cy="10" rx="6" ry="10" fill="#C9A84C" transform="rotate(-20,196,10)"/>
-        <ellipse cx="206" cy="8" rx="5" ry="9" fill="#C9A84C" transform="rotate(-10,206,8)"/>
-        <ellipse cx="214" cy="10" rx="5" ry="9" fill="#C9A84C" transform="rotate(5,214,10)"/>
-        <ellipse cx="220" cy="15" rx="5" ry="8" fill="#C9A84C" transform="rotate(15,220,15)"/>
-        <ellipse cx="188" cy="14" rx="5" ry="9" fill="#C9A84C" transform="rotate(-30,188,14)"/>
-        <!-- F -->
-        <rect x="134" y="36" width="14" height="32" fill="#1B7A3E"/>
-        <rect x="134" y="36" width="28" height="12" fill="#1B7A3E"/>
-        <rect x="134" y="52" width="22" height="10" fill="#1B7A3E"/>
-        <!-- A -->
-        <path d="M170 68 L184 36 L198 68 L184 68 Z" fill="#1B7A3E"/>
-        <rect x="174" y="56" width="20" height="8" fill="#1B7A3E"/>
-        <!-- A inner white -->
-        <path d="M184 42 L178 60 L190 60 Z" fill="white"/>
-        <!-- TM -->
-        <text x="232" y="42" font-family="Arial" font-size="11" fill="#1B7A3E" font-weight="bold">TM</text>
-      </svg>
-      <div class="nav-logo-text" style="border-left:1px solid #C2DFCC;padding-left:10px;">
-        <div class="t2" style="font-size:9px;color:#5A8A6A;">Media House</div>
+      <div style="display:flex;flex-direction:column;line-height:1.1;">
+        <span style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:26px;letter-spacing:3px;color:#1B7A3E;line-height:1;">NMH</span>
+        <span style="font-family:'Barlow',sans-serif;font-weight:400;font-size:9px;letter-spacing:3px;color:#5A8A6A;text-transform:uppercase;">NISFA Media House</span>
       </div>
     </div>
   </div>
-
-  <ul class="nav-links">
+  <ul class="nav-links">>
     <li><button onclick="showSection('prices')"    id="nb-prices">Prices</button></li>
     <li><button onclick="showSection('live')"      id="nb-live" class="live-btn"><span class="live-dot"></span>Live</button></li>
     <li><button onclick="showSection('programmes')" id="nb-programmes">Programmes</button></li>
@@ -492,29 +464,14 @@ footer{background:#1B7A3E;border-top:1px solid #145C2E;margin-top:72px;}
     <div class="hero-content reveal">
       <!-- NISFA Logo in hero -->
       <div class="hero-logo-block">
-        <!-- Try uploaded PNG first, fallback to inline SVG logo -->
         <img src="nisfa-logo.png" alt="NISFA Media House"
              onerror="this.style.display='none';document.getElementById('heroLogoFallback').style.display='block';"
              style="height:80px;width:auto;filter:drop-shadow(0 2px 16px rgba(0,0,0,0.5));">
         <div id="heroLogoFallback" style="display:none;">
-          <svg width="220" height="60" viewBox="0 0 260 72" xmlns="http://www.w3.org/2000/svg">
-            <path d="M8 6 L8 62 L22 62 L22 28 L44 62 L58 62 L58 6 L44 6 L44 40 L22 6 Z" fill="white"/>
-            <rect x="66" y="6" width="13" height="56" fill="white"/>
-            <path d="M86 6 L86 18 L110 18 L110 34 L86 34 L86 62 L120 62 L120 50 L100 50 L100 44 L120 44 L120 6 Z" fill="white"/>
-            <path d="M98 26 Q146 2 198 12" stroke="#C9A84C" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-            <ellipse cx="194" cy="8" rx="6" ry="10" fill="#C9A84C" transform="rotate(-20,194,8)"/>
-            <ellipse cx="204" cy="6" rx="5" ry="9" fill="#C9A84C" transform="rotate(-10,204,6)"/>
-            <ellipse cx="212" cy="8" rx="5" ry="9" fill="#C9A84C" transform="rotate(5,212,8)"/>
-            <ellipse cx="218" cy="13" rx="5" ry="8" fill="#C9A84C" transform="rotate(15,218,13)"/>
-            <ellipse cx="186" cy="12" rx="5" ry="9" fill="#C9A84C" transform="rotate(-30,186,12)"/>
-            <rect x="132" y="34" width="13" height="28" fill="white"/>
-            <rect x="132" y="34" width="26" height="11" fill="white"/>
-            <rect x="132" y="48" width="20" height="9" fill="white"/>
-            <path d="M168 62 L182 34 L196 62 Z" fill="white"/>
-            <rect x="172" y="52" width="20" height="8" fill="white"/>
-            <path d="M182 40 L176 56 L188 56 Z" fill="#1B7A3E"/>
-            <text x="228" y="38" font-family="Arial" font-size="10" fill="white" font-weight="bold">TM</text>
-          </svg>
+          <div style="display:inline-flex;align-items:baseline;gap:6px;">
+            <span style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:68px;color:#FFFFFF;letter-spacing:-2px;line-height:1;text-shadow:0 2px 20px rgba(0,0,0,0.3);">NMH</span>
+          </div>
+          <div style="font-family:'Barlow',sans-serif;font-size:12px;font-weight:400;letter-spacing:3px;color:rgba(255,255,255,0.75);text-transform:uppercase;margin-top:2px;">NISFA Media House</div>
         </div>
         <div class="hero-tagline-badge">Nigeria's Agribusiness &amp; Trade Media Platform</div>
       </div>
@@ -666,9 +623,9 @@ footer{background:#1B7A3E;border-top:1px solid #145C2E;margin-top:72px;}
     <div style="background:#fff;border:1px solid #C2DFCC;border-radius:4px;padding:20px 24px;margin-bottom:44px;box-shadow:0 2px 8px rgba(27,122,62,0.06);">
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#1B7A3E;margin-bottom:14px;">📺 Watch on YouTube</div>
       <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
-        <input id="ytQuickId" class="form-input" style="flex:1;min-width:200px;" placeholder="Paste YouTube Video ID or Channel ID here…">
+        <input id="ytQuickId" class="form-input" style="flex:1;min-width:200px;" value="UCiGx-hyC8VF8S9YWlbbJSLg" placeholder="YouTube Video ID or Channel ID">
         <button class="btn-post" onclick="quickEmbedYT()">▶ Watch Now</button>
-        <button class="btn-cancel-sm" onclick="window.open('https://youtube.com/@NMHNisfa','_blank')">Open YouTube Channel</button>
+        <button class="btn-cancel-sm" onclick="window.open('https://youtube.com/@nisfamediahouse','_blank')">Open YouTube Channel</button>
       </div>
       <div style="font-size:11px;color:#5A8A6A;margin-top:10px;">
         💡 For live stream: paste your YouTube Video ID (11 characters from the URL after ?v=) or go to Admin → Stream to set your Channel ID permanently.
@@ -801,8 +758,17 @@ footer{background:#1B7A3E;border-top:1px solid #145C2E;margin-top:72px;}
           <!-- Price Entry Form -->
           <div class="form-panel" style="margin-bottom:0;">
             <div class="panel-title">📊 New Price Entry</div>
+            <div style="background:#E8F5EC;border-radius:4px;padding:10px 14px;margin-bottom:12px;font-size:11px;color:#1B7A3E;font-weight:600;">
+              ⏰ Price timestamp is recorded automatically when you tap Publish.
+            </div>
             <div class="form-grid" style="grid-template-columns:repeat(auto-fill,minmax(155px,1fr));">
-              <div class="form-group"><label class="form-label">Commodity</label>
+              <div class="form-group"><label class="form-label">Market Name</label>
+                <input class="form-input" id="aMarketName" placeholder="e.g. Dawanau Market"></div>
+              <div class="form-group"><label class="form-label">City / Location</label>
+                <input class="form-input" id="aMarket" placeholder="e.g. Kano"></div>
+              <div class="form-group"><label class="form-label">State</label>
+                <input class="form-input" id="aState" placeholder="e.g. Kano State"></div>
+              <div class="form-group"><label class="form-label">Commodity Type</label>
                 <select class="form-select" id="aCommodity">
                   <option>Sesame</option><option>Soybeans</option><option>Maize</option>
                   <option>Hibiscus</option><option>Ginger</option><option>Groundnut</option>
@@ -823,14 +789,12 @@ footer{background:#1B7A3E;border-top:1px solid #145C2E;margin-top:72px;}
               </div>
               <div class="form-group"><label class="form-label">Change %</label>
                 <input class="form-input" id="aChange" placeholder="+6.05 or -3.2"></div>
-              <div class="form-group"><label class="form-label">Market / Location</label>
-                <input class="form-input" id="aMarket" placeholder="Kano, Lagos…"></div>
-              <div class="form-group"><label class="form-label">State</label>
-                <input class="form-input" id="aState" placeholder="e.g. Kano"></div>
-              <div class="form-group"><label class="form-label">Date</label>
-                <input class="form-input" type="date" id="aDate"></div>
-              <div class="form-group"><label class="form-label">Index / Exchange</label>
+              <div class="form-group"><label class="form-label">Price Index / Exchange</label>
                 <input class="form-input" id="aIndex" placeholder="e.g. AFEX, NCAM, Spot"></div>
+              <div class="form-group"><label class="form-label">Time of Price Change</label>
+                <input class="form-input" type="time" id="aPriceTime">
+                <div style="font-size:9px;color:#5A8A6A;margin-top:3px;">Auto-recorded if left blank</div>
+              </div>
             </div>
             <div class="form-group" style="margin-bottom:13px;">
               <label class="form-label">Market Commentary</label>
@@ -850,7 +814,7 @@ footer{background:#1B7A3E;border-top:1px solid #145C2E;margin-top:72px;}
             <div class="panel-title">🔴 YouTube Live Integration</div>
             <div class="form-grid">
               <div class="form-group" style="grid-column:1/-1;"><label class="form-label">YouTube Channel ID or Live Stream URL</label>
-                <input class="form-input" id="ytChannelId" placeholder="e.g. UCxxxxxxxxxxxxxxxxxxxxxx or full YouTube Live URL"></div>
+                <input class="form-input" id="ytChannelId" value="UCiGx-hyC8VF8S9YWlbbJSLg" placeholder="YouTube Channel ID"></div>
               <div class="form-group"><label class="form-label">Programme Title</label><input class="form-input" id="streamTitle" placeholder="e.g. NMH Market Outlook"></div>
               <div class="form-group"><label class="form-label">Scheduled Time</label><input class="form-input" type="time" id="streamTime"></div>
             </div>
@@ -942,7 +906,7 @@ footer{background:#1B7A3E;border-top:1px solid #145C2E;margin-top:72px;}
     <div class="ft-col">
       <div class="ft-col-title">Connect</div>
       <ul>
-        <li><a href="https://youtube.com" target="_blank">YouTube Channel</a></li>
+        <li><a href="https://youtube.com/@nisfamediahouse" target="_blank">YouTube — @nisfamediahouse</a></li>
         <li><a href="#">WhatsApp Updates</a></li>
         <li><a href="#">Twitter / X</a></li>
         <li><a href="#">LinkedIn</a></li>
@@ -1012,6 +976,13 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db   = firebase.firestore();
+
+// Set persistence so login stays active
+auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(e => console.log('Persistence:', e));
+
+// NMH YouTube Channel
+const NMH_YOUTUBE_CHANNEL = 'UCiGx-hyC8VF8S9YWlbbJSLg';
+const NMH_YOUTUBE_HANDLE  = '@nisfamediahouse';
 
 // demo mode flag (no real Firebase config pasted yet)
 const DEMO_MODE = false; // Firebase connected — nmh-nisfa-media
@@ -1117,11 +1088,28 @@ function submitAuth() {
     : auth.createUserWithEmailAndPassword(email, password);
 
   promise
-    .then(() => { btn.textContent = authMode === 'signin' ? 'Sign In' : 'Create Account'; btn.disabled = false; })
+    .then(cred => {
+      btn.textContent = 'Sign In'; btn.disabled = false;
+      showToast('✅ Welcome back, ' + (cred.user.email.split('@')[0]) + '!');
+      closeAuth();
+      showSection('admin');
+    })
     .catch(err => {
-      btn.textContent = authMode === 'signin' ? 'Sign In' : 'Create Account'; btn.disabled = false;
-      const msgs = { 'auth/user-not-found':'No account found with this email.','auth/wrong-password':'Incorrect password — please try again.','auth/invalid-email':'Please enter a valid email address.','auth/email-already-in-use':'An account with this email already exists.','auth/weak-password':'Password must be at least 6 characters.','auth/invalid-credential':'Wrong email or password. Please check and try again.','auth/too-many-requests':'Too many attempts. Please wait a few minutes and try again.','auth/network-request-failed':'Network error. Please check your internet connection.' };
-      showAuthError(msgs[err.code] || err.message);
+      btn.textContent = 'Sign In'; btn.disabled = false;
+      const msgs = {
+        'auth/user-not-found':      'No account found with this email.',
+        'auth/wrong-password':      'Incorrect password. Please try again.',
+        'auth/invalid-email':       'Please enter a valid email address.',
+        'auth/invalid-credential':  'Wrong email or password. Please check and try again.',
+        'auth/email-already-in-use':'An account with this email already exists.',
+        'auth/weak-password':       'Password must be at least 6 characters.',
+        'auth/too-many-requests':   'Too many failed attempts. Please wait a few minutes.',
+        'auth/network-request-failed':'No internet. Please check your connection.',
+        'auth/user-disabled':       'This account has been disabled. Contact your admin.'
+      };
+      const msg = msgs[err.code] || ('Login failed: ' + err.message);
+      showAuthError(msg);
+      console.error('Auth error:', err.code, err.message);
     });
 }
 
@@ -1236,6 +1224,7 @@ function postPrice() {
 }
 
 function adminPostPrice() {
+  const marketName = document.getElementById('aMarketName').value.trim();
   const commodity  = document.getElementById('aCommodity').value;
   const price      = parseFloat(document.getElementById('aPrice').value);
   const priceHigh  = parseFloat(document.getElementById('aPriceHigh').value) || null;
@@ -1246,9 +1235,13 @@ function adminPostPrice() {
   const state      = document.getElementById('aState').value.trim();
   const index      = document.getElementById('aIndex').value.trim();
   const note       = document.getElementById('aNote').value.trim();
+  const priceTime  = document.getElementById('aPriceTime').value || new Date().toLocaleTimeString('en-NG',{hour:'2-digit',minute:'2-digit'});
+  const priceDate  = new Date().toLocaleDateString('en-NG',{weekday:'short',year:'numeric',month:'short',day:'numeric'});
   if (!price) { showToast('⚠️ Please enter a current price', true); return; }
+  if (!commodity)  { showToast('⚠️ Please select a commodity', true); return; }
   const dir = change.startsWith('-') ? 'down' : 'up';
-  const entry = { commodity, price, priceHigh, priceLow, unit, change, dir, market, state, index, note,
+  const entry = { marketName, commodity, price, priceHigh, priceLow, unit, change, dir,
+    market, state, index, note, priceTime, priceDate,
     timestamp: DEMO_MODE ? Date.now() : firebase.firestore.FieldValue.serverTimestamp(),
     postedBy: currentUser?.email || 'admin' };
   if (DEMO_MODE) { defaultPrices.unshift(entry); renderPriceGrid(defaultPrices); showToast('✅ ' + commodity + ' price published! (Demo)'); return; }
@@ -1392,7 +1385,18 @@ function quickEmbedYT() {
 }
 
 function startStream() {
-  if (DEMO_MODE) {
+  // Auto-load NMH YouTube channel
+  const playerScreen = document.getElementById('playerScreen');
+  const ph = document.getElementById('playerPlaceholder');
+  if (ph) ph.style.display = 'none';
+  playerScreen.innerHTML = `<span class="live-badge"><span class="live-dot"></span>LIVE</span>
+    <iframe src="https://www.youtube.com/embed/live_stream?channel=UCiGx-hyC8VF8S9YWlbbJSLg&autoplay=1&rel=0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen style="width:100%;height:100%;border:none;display:block;"></iframe>`;
+  document.getElementById('liveShowTitle').textContent = 'NMH Live — NISFA Media House';
+  showToast('▶ Connecting to NMH YouTube Live…');
+  return;
+  /* if (DEMO_MODE) { */
     document.getElementById('playerScreen').innerHTML = `
       <div style="position:absolute;inset:0;background:#000;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;">
         <div style="color:var(--red);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:2px;">DEMO MODE</div>
